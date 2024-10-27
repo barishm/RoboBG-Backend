@@ -1,0 +1,31 @@
+version: 0.2  # Specify the buildspec version
+
+phases:
+  install:  # Commands to install dependencies
+    runtime-versions:  # Specify runtime versions for languages
+      java: corretto17  # Use Amazon Corretto 17 for Java 17
+    commands:
+      - echo "Installing dependencies..."
+      # If needed, install Maven explicitly (optional step)
+      # You may not need this if the CodeBuild image already includes Maven
+      - echo "Maven is already included in the environment."
+
+  pre_build:  # Commands to run before the build starts
+    commands:
+      - echo "Pre-build phase..."
+      # Any necessary preparation commands can go here
+
+  build:  # Commands to build your application
+    commands:
+      - echo "Building the project..."
+      - mvn clean package  # Build the Maven project and create the JAR file
+      # If you have specific profiles or settings, you can add them here
+      # - mvn clean package -P your-profile
+
+  post_build:  # Commands to run after the build
+    commands:
+      - echo "Build completed."
+
+artifacts:  # Specify the output artifacts for deployment
+  files:
+    - target/*.jar  # Adjust the path based on where your JAR file is generated
