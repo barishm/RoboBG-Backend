@@ -45,6 +45,9 @@ public class DatabaseSeeder implements CommandLineRunner {
             user.setPassword(passwordEncoder.encode(adminPassword));
             user.setRole(Role.ADMIN);
             userRepository.save(user);
+            System.out.println("CREATED ADMIN");
+        } else {
+            System.out.println("THERE IS ALREADY AN ADMIN");
         }
 
         InputStream inputStream = getClass().getResourceAsStream("/robots.json");
