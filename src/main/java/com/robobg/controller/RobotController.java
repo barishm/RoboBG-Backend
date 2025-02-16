@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/v1/robots")
 public class RobotController {
     private final RobotService robotService;

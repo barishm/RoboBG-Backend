@@ -12,6 +12,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 import static com.robobg.entity.Role.*;
 
@@ -31,23 +36,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors().and()
-                .csrf()
-                .disable()
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests
-                                .requestMatchers("/v1/admin/**").hasRole(ADMIN.name())
-                                .requestMatchers("/v1/moderator/**").hasAnyRole(MODERATOR.name(), ADMIN.name())
-                                .requestMatchers("/v1/user/**").hasAnyRole(USER.name() , ADMIN.name(), MODERATOR.name())
-                                .anyRequest().permitAll()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf().disable()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/v1/admin/**").hasRole(ADMIN.name())
+                        .requestMatchers("/v1/moderator/**").hasAnyRole(MODERATOR.name(), ADMIN.name())
+                        .requestMatchers("/v1/user/**").hasAnyRole(USER.name(), ADMIN.name(), MODERATOR.name())
+                        .anyRequest().permitAll()
                 )
-                .sessionManagement(sessionManagement ->
-                        sessionManagement
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "https://api.barishm.com", "http://api.barishm.com"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

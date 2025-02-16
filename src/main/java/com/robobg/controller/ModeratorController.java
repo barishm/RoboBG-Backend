@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/v1/moderator")
 public class ModeratorController {
     private final RobotService robotService;
