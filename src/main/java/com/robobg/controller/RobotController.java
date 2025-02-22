@@ -42,6 +42,11 @@ public class RobotController {
         return robotService.getRobots(fields,page,model,brands,startYear,endYear,minDustbinCapacity,maxDustbinCapacity,minSuctionPower,maxSuctionPower);
     }
 
+    @GetMapping("/all")
+    public List<RobotModelImageLinksDTO> getAllRobots() {
+        return robotService.getAllRobots();
+    }
+
     @GetMapping("/bests")
     public List<RobotModelImageLinksDTO> getBestRobots(){
         return robotService.findAllBests();

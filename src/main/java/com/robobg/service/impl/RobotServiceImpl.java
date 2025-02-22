@@ -213,5 +213,11 @@ public class RobotServiceImpl implements RobotService {
         robotRepository.save(robot);
     }
 
+    @Override
+    public List<RobotModelImageLinksDTO> getAllRobots() {
+        List<Robot> allRobots = robotRepository.findAll();
+        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotModelImageLinksDTO.class)).toList();
+    }
+
 
 }

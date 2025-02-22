@@ -1,6 +1,5 @@
 package com.robobg.service;
 
-import com.robobg.entity.Robot;
 import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotModelImageLinksDTO;
@@ -37,4 +36,6 @@ public interface RobotService {
 
 
     void incrementQnaCount(RobotDTO robotDTO);
+
+    List<RobotModelImageLinksDTO> getAllRobots();
 }
