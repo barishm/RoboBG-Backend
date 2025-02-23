@@ -1,6 +1,7 @@
 package com.robobg.controller;
 
 import com.robobg.entity.dtos.QuestionWithAnswersDTO;
+import com.robobg.entity.dtos.RobotDTO.RobotBrandModelImageLinkDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotModelImageLinksDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotResponse;
@@ -43,7 +44,7 @@ public class RobotController {
     }
 
     @GetMapping("/all")
-    public List<RobotModelImageLinksDTO> getAllRobots() {
+    public List<RobotBrandModelImageLinkDTO> getAllRobots() {
         return robotService.getAllRobots();
     }
 

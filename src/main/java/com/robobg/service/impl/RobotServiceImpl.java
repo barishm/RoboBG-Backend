@@ -214,9 +214,9 @@ public class RobotServiceImpl implements RobotService {
     }
 
     @Override
-    public List<RobotModelImageLinksDTO> getAllRobots() {
+    public List<RobotBrandModelImageLinkDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
-        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotModelImageLinksDTO.class)).toList();
+        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotBrandModelImageLinkDTO.class)).toList();
     }
 
 

@@ -1,9 +1,6 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotModelImageLinksDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotResponse;
+import com.robobg.entity.dtos.RobotDTO.*;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -37,5 +34,5 @@ public interface RobotService {
 
     void incrementQnaCount(RobotDTO robotDTO);
 
-    List<RobotModelImageLinksDTO> getAllRobots();
+    List<RobotBrandModelImageLinkDTO> getAllRobots();
 }
