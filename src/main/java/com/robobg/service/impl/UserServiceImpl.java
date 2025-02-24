@@ -2,9 +2,8 @@ package com.robobg.service.impl;
 
 import com.robobg.entity.Role;
 import com.robobg.entity.User;
-import com.robobg.entity.dtos.RobotDTO.RobotDTO;
-import com.robobg.entity.dtos.UserIdUsernameRoleDTO;
-import com.robobg.entity.dtos.UserUsernameEmailDTO;
+import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
+import com.robobg.entity.dtos.UserDTO.UserUsernameEmailDTO;
 import com.robobg.repository.UserRepository;
 import com.robobg.service.UserService;
 import jakarta.persistence.EntityNotFoundException;

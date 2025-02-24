@@ -1,4 +1,4 @@
-package com.robobg.entity.dtos;
+package com.robobg.entity.dtos.QnaDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class AnswerCreateDTO {
+public class QuestionCreateDTO {
     private Long id;
-    private Long questionId;
+    private Long robotId;
     private String authorUsername;
     @NotBlank
     @NotNull

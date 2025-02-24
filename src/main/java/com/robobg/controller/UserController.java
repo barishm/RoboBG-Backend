@@ -1,8 +1,8 @@
 package com.robobg.controller;
 
 import com.robobg.config.JwtService;
-import com.robobg.entity.dtos.AnswerCreateDTO;
-import com.robobg.entity.dtos.QuestionCreateDTO;
+import com.robobg.entity.dtos.QnaDTO.AnswerCreateDTO;
+import com.robobg.entity.dtos.QnaDTO.QuestionCreateDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.service.AnswerService;
 import com.robobg.service.QuestionService;

@@ -1,6 +1,6 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.QuestionWithAnswersDTO;
+import com.robobg.entity.dtos.QnaDTO.QuestionWithAnswersDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotBrandModelImageLinkDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotModelImageLinksDTO;

@@ -1,11 +1,11 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.LatestQuestionsDTO;
+import com.robobg.entity.dtos.QnaDTO.LatestQuestionsDTO;
 import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
 import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
 import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.dtos.RobotDTO.UpdateMostComparedDTO;
-import com.robobg.entity.dtos.UserIdUsernameRoleDTO;
+import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
