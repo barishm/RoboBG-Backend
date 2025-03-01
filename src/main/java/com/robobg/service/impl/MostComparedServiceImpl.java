@@ -4,7 +4,6 @@ import com.robobg.entity.MostCompared;
 import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
 import com.robobg.entity.dtos.RobotDTO.MostComparedDTO;
 import com.robobg.entity.dtos.RobotDTO.RobotModelDTO;
-import com.robobg.entity.dtos.RobotDTO.UpdateMostComparedDTO;
 import com.robobg.repository.MostComparedRepository;
 import com.robobg.repository.RobotRepository;
 import com.robobg.service.MostComparedService;
@@ -105,7 +104,7 @@ public class MostComparedServiceImpl implements MostComparedService {
     }
 
     @Override
-    public void updateMostCompared(UpdateMostComparedDTO updateMostComparedDTO) {
+    public void updateMostCompared(CreateMostComparedDTO updateMostComparedDTO) {
         MostCompared mostCompared = new MostCompared();
         mostCompared.setId(updateMostComparedDTO.getId());
         Long robot1 = updateMostComparedDTO.getRobot1();

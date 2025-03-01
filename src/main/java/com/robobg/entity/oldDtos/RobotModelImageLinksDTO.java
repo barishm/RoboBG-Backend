@@ -1,4 +1,4 @@
-package com.robobg.entity.dtos.RobotDTO;
+package com.robobg.entity.oldDtos;
 
 import com.robobg.entity.dtos.RobotDTO.PurchaseLinkDTO;
 import lombok.Data;

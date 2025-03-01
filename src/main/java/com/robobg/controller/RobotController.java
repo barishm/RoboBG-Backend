@@ -1,10 +1,8 @@
 package com.robobg.controller;
 
 import com.robobg.entity.dtos.QnaDTO.QuestionWithAnswersDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotBrandModelImageLinkDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotModelImageLinksDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotResponse;
+import com.robobg.entity.dtos.RobotDTO.*;
+import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.service.QuestionService;
 import com.robobg.service.RobotService;
 import org.springframework.web.bind.annotation.*;
@@ -44,12 +42,12 @@ public class RobotController {
     }
 
     @GetMapping("/all")
-    public List<RobotBrandModelImageLinkDTO> getAllRobots() {
+    public List<RobotsListDTO> getAllRobots() {
         return robotService.getAllRobots();
     }
 
     @GetMapping("/bests")
-    public List<RobotModelImageLinksDTO> getBestRobots(){
+    public List<RobotsListDTO> getBestRobots(){
         return robotService.findAllBests();
     }
 

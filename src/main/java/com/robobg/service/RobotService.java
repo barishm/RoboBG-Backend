@@ -1,6 +1,7 @@
 package com.robobg.service;
 
 import com.robobg.entity.dtos.RobotDTO.*;
+import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public interface RobotService {
     void saveRobot(CreateRobotDTO robot) throws RobotAlreadyExistsException;
     void updateRobot(CreateRobotDTO robot);
     void deleteRobotById(Long id) throws ChangeSetPersister.NotFoundException;
-    List<RobotModelImageLinksDTO> findAllBests();
+    List<RobotsListDTO> findAllBests();
 
     RobotResponse getAllModels();
 
@@ -34,5 +35,5 @@ public interface RobotService {
 
     void incrementQnaCount(RobotDTO robotDTO);
 
-    List<RobotBrandModelImageLinkDTO> getAllRobots();
+    List<RobotsListDTO> getAllRobots();
 }

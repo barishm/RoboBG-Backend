@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RobotBrandModelImageLinkDTO {
+public class RobotsListDTO {
     private Long id;
     private String brand;
     private String model;

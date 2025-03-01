@@ -1,10 +1,10 @@
 package com.robobg.controller;
 
+import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
 import com.robobg.entity.dtos.QnaDTO.LatestQuestionsDTO;
 import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
 import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
 import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
-import com.robobg.entity.dtos.RobotDTO.UpdateMostComparedDTO;
 import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.service.*;
@@ -24,13 +24,15 @@ public class ModeratorController {
     private final PurchaseLinkService purchaseLinkService;
     private final MostComparedService mostComparedService;
     private final QuestionService questionService;
+    private final ConsumableService consumableService;
     @Autowired
-    public ModeratorController(RobotService robotService, UserService userService, PurchaseLinkService purchaseLinkService, MostComparedService mostComparedService, QuestionService questionService) {
+    public ModeratorController(RobotService robotService, UserService userService, PurchaseLinkService purchaseLinkService, MostComparedService mostComparedService, QuestionService questionService, ConsumableService consumableService) {
         this.robotService = robotService;
         this.userService = userService;
         this.purchaseLinkService = purchaseLinkService;
         this.mostComparedService = mostComparedService;
         this.questionService = questionService;
+        this.consumableService = consumableService;
     }
 
     @DeleteMapping("/robots/{id}")
@@ -71,7 +73,7 @@ public class ModeratorController {
     }
 
     @PutMapping("/most-compared")
-    public void updateMostCompared(@RequestBody UpdateMostComparedDTO updateMostComparedDTO){
+    public void updateMostCompared(@RequestBody CreateMostComparedDTO updateMostComparedDTO){
         mostComparedService.updateMostCompared(updateMostComparedDTO);
     }
 
@@ -85,6 +87,21 @@ public class ModeratorController {
                                  @RequestParam("file")MultipartFile file) throws IOException {
         robotService.uploadRobotImage(robotId,file);
 
+    }
+
+    @DeleteMapping("/consumable/{id}")
+    public void deleteConsumable(@PathVariable Long id) {
+        consumableService.deleteConsumable(id);
+    }
+
+    @PostMapping("/consumable")
+    public void createConsumable(@RequestBody CreateConsumableDTO createConsumableDTO){
+        consumableService.createConsumableService(createConsumableDTO);
+    }
+
+    @PutMapping("/consumable")
+    public void updateConsumable(@RequestBody CreateConsumableDTO updateConsumableDTO) {
+        consumableService.updateConsumable(updateConsumableDTO);
     }
 
     @GetMapping("/questions")

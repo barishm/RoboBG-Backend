@@ -2,6 +2,8 @@ package com.robobg.service.impl;
 
 import com.robobg.entity.Robot;
 import com.robobg.entity.dtos.RobotDTO.*;
+import com.robobg.entity.oldDtos.RobotModelImageLinksDTO;
+import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.repository.RobotRepository;
 import com.robobg.repository.RobotSpecifications;
@@ -44,11 +46,11 @@ public class RobotServiceImpl implements RobotService {
     }
 
     @Override
-    public List<RobotModelImageLinksDTO> findAllBests() {
+    public List<RobotsListDTO> findAllBests() {
         return robotRepository.findAllBests().stream()
                 .filter(robot -> Boolean.TRUE.equals(robot.getBests()))
                 .limit(9)
-                .map(robot -> modelMapper.map(robot, RobotModelImageLinksDTO.class))
+                .map(robot -> modelMapper.map(robot, RobotsListDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -214,9 +216,9 @@ public class RobotServiceImpl implements RobotService {
     }
 
     @Override
-    public List<RobotBrandModelImageLinkDTO> getAllRobots() {
+    public List<RobotsListDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
-        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotBrandModelImageLinkDTO.class)).toList();
+        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotsListDTO.class)).toList();
     }
 
 
