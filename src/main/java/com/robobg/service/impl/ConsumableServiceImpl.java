@@ -41,7 +41,7 @@ public class ConsumableServiceImpl implements ConsumableService {
     @Override
     @Transactional
     public void createConsumableService(CreateConsumableDTO createConsumableDTO) {
-        Set<Robot> compatibleRobots = new HashSet<>(robotRepository.findAllById(createConsumableDTO.getCompatibleRobotIds()));
+        Set<Robot> compatibleRobots = new HashSet<>(robotRepository.findAllById(createConsumableDTO.getRobotIds()));
 
         Consumable consumable = new Consumable();
         consumable.setTitle(createConsumableDTO.getTitle());
@@ -64,8 +64,8 @@ public class ConsumableServiceImpl implements ConsumableService {
             existingConsumable.setDescription(updateConsumableDTO.getDescription());
         }
 
-        if (updateConsumableDTO.getCompatibleRobotIds() != null && !updateConsumableDTO.getCompatibleRobotIds().isEmpty()) {
-            Set<Robot> updatedRobots = new HashSet<>(robotRepository.findAllById(updateConsumableDTO.getCompatibleRobotIds()));
+        if (updateConsumableDTO.getRobotIds() != null && !updateConsumableDTO.getRobotIds().isEmpty()) {
+            Set<Robot> updatedRobots = new HashSet<>(robotRepository.findAllById(updateConsumableDTO.getRobotIds()));
             existingConsumable.setCompatibleRobots(updatedRobots);
         }
 
