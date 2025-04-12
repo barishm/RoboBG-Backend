@@ -2,8 +2,10 @@ package com.robobg.service.impl;
 
 import com.robobg.entity.Consumable;
 import com.robobg.entity.Robot;
+import com.robobg.entity.dtos.ConsumableDTO.ConsumableDetailsDTO;
 import com.robobg.entity.dtos.ConsumableDTO.ConsumableListDTO;
 import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
+import com.robobg.entity.dtos.RobotDTO.RobotDTO;
 import com.robobg.repository.ConsumableRepository;
 import com.robobg.repository.RobotRepository;
 import com.robobg.service.ConsumableService;
@@ -12,8 +14,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -46,6 +50,9 @@ public class ConsumableServiceImpl implements ConsumableService {
         Consumable consumable = new Consumable();
         consumable.setTitle(createConsumableDTO.getTitle());
         consumable.setDescription(createConsumableDTO.getDescription());
+        if (createConsumableDTO.getPrice() != null) {
+            consumable.setPrice(new BigDecimal(createConsumableDTO.getPrice()));
+        }
         consumable.setCompatibleRobots(compatibleRobots);
 
         consumableRepository.save(consumable);
@@ -64,6 +71,14 @@ public class ConsumableServiceImpl implements ConsumableService {
             existingConsumable.setDescription(updateConsumableDTO.getDescription());
         }
 
+        if (updateConsumableDTO.getPrice() != null && !updateConsumableDTO.getPrice().trim().isEmpty()) {
+            try {
+                existingConsumable.setPrice(new BigDecimal(updateConsumableDTO.getPrice()));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid price format: " + updateConsumableDTO.getPrice());
+            }
+        }
+
         if (updateConsumableDTO.getRobotIds() != null && !updateConsumableDTO.getRobotIds().isEmpty()) {
             Set<Robot> updatedRobots = new HashSet<>(robotRepository.findAllById(updateConsumableDTO.getRobotIds()));
             existingConsumable.setCompatibleRobots(updatedRobots);
@@ -75,5 +90,15 @@ public class ConsumableServiceImpl implements ConsumableService {
     @Override
     public void deleteConsumable(Long id) {
         consumableRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<ConsumableDetailsDTO> getConsumableById(Long id) {
+        Optional<Consumable> consumable = consumableRepository.findById(id);
+        if (consumable.isPresent()) {
+            ConsumableDetailsDTO consumableDTO = modelMapper.map(consumable.get(), ConsumableDetailsDTO.class);
+            return Optional.of(consumableDTO);
+        }
+        return Optional.empty();
     }
 }

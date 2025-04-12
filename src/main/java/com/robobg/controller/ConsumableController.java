@@ -1,12 +1,15 @@
 package com.robobg.controller;
 
+import com.robobg.entity.dtos.ConsumableDTO.ConsumableDetailsDTO;
 import com.robobg.entity.dtos.ConsumableDTO.ConsumableListDTO;
 import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
+import com.robobg.entity.dtos.RobotDTO.RobotDTO;
 import com.robobg.service.ConsumableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/consumable")
@@ -38,6 +41,11 @@ public class ConsumableController {
     @GetMapping
     public List<ConsumableListDTO> getAllConsumables() {
         return consumableService.getAllConsumables();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<ConsumableDetailsDTO> getRobotById(@PathVariable("id") Long id) {
+        return consumableService.getConsumableById(id);
     }
 
 

@@ -1,5 +1,6 @@
 package com.robobg.entity.dtos.RobotDTO;
 
+import com.robobg.entity.dtos.ConsumableDTO.ConsumableTitleDTO;
 import lombok.Data;
 
 import java.util.List;
@@ -31,4 +32,5 @@ public class RobotDTO {
     private OtherSpecificationsDTO otherSpecifications;
     private List<PurchaseLinkDTO> purchaseLinks;
     private Integer qnaCount;
+    private List<ConsumableTitleDTO> consumables;
 }

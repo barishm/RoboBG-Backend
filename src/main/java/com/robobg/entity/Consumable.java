@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,8 @@ public class Consumable {
 
     private String title;
     private String description;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
 
     @ManyToMany
     @JoinTable(
