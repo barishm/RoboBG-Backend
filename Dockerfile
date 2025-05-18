@@ -8,7 +8,7 @@ WORKDIR /app
 COPY target/RoboBG-Backend.jar RoboBG-Backend.jar
 
 # Expose the port your Spring Boot app is running on (default is 8080)
-EXPOSE 8080
+EXPOSE 5000
 
 # Run the JAR file
 ENTRYPOINT ["java", "-jar", "RoboBG-Backend.jar"]
