@@ -6,6 +6,7 @@ import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
 import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
 import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
+import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.service.*;
 import org.slf4j.Logger;
@@ -92,12 +93,12 @@ public class ModeratorController {
         logger.info("Received upload request for robotId: {}", robotId);
         logger.info("File original name: {}", file.getOriginalFilename());
         logger.info("File size: {} bytes", file.getSize());
-        robotService.uploadRobotImageLocally(robotId,file);
+        robotService.uploadRobotImage(robotId,file);
 
     }
 
     @DeleteMapping("/consumable/{id}")
-    public void deleteConsumable(@PathVariable Long id) {
+    public void deleteConsumable(@PathVariable Long id) throws EntityNotFoundException {
         consumableService.deleteConsumable(id);
     }
 

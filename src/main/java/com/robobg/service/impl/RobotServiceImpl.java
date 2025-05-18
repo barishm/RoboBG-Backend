@@ -32,17 +32,15 @@ public class RobotServiceImpl implements RobotService {
 
 
     private final RobotRepository robotRepository;
-    private final S3Service s3Service;
     private final ModelMapper modelMapper;
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
-
+    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/";
 
     @Autowired
-    public RobotServiceImpl(RobotRepository robotRepository, S3Service s3Service, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
+    public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
         super();
         this.robotRepository = robotRepository;
-        this.s3Service = s3Service;
         this.modelMapper = modelMapper;
         this.mostComparedService = mostComparedService;
         this.availableBrandsService = availableBrandsService;
@@ -124,10 +122,18 @@ public class RobotServiceImpl implements RobotService {
         Optional<Robot> optionalRobot = robotRepository.findById(id);
         if (optionalRobot.isPresent()) {
             Robot robot = optionalRobot.get();
-            String imageUrl = robot.getImage();
-            if(imageUrl != null) {
-                String fileName = imageUrl.substring(64);
-                s3Service.deleteObjectFromBucket("robot-review-robot-images",fileName);
+            String imageFileName = robot.getImage();
+
+            // Delete image from local file system
+            if (imageFileName != null) {
+                Path imagePath = Paths.get("/home/ubuntu/robobg/images", imageFileName);
+                try {
+                    Files.deleteIfExists(imagePath);
+                } catch (IOException e) {
+                    // Log and proceed — deletion failure shouldn't block overall delete
+                    System.err.println("Failed to delete image file: " + imagePath);
+                    e.printStackTrace();
+                }
             }
             availableBrandsService.decreaseCount(robot.getBrand());
             mostComparedService.deleteMostComparedEntityIfRobotWithIdExist(id);
@@ -137,42 +143,9 @@ public class RobotServiceImpl implements RobotService {
         }
     }
 
-    @Override // old method for uploading images in s3 bucket
-    public void uploadRobotImage(Long robotId, MultipartFile file) throws IOException {
-        System.out.println("Starting image upload in s3 bucket for robot ID: " + robotId);
-        Optional<Robot> robotOptional = robotRepository.findById(robotId);
-        if (robotOptional.isEmpty()) {
-            throw new IllegalArgumentException("Robot with ID " + robotId + " does not exist.");
-        }
-        Robot robot = robotOptional.get();
-        if(robot.getImage() != null) {
-            String fileName = robot.getImage().substring(64);
-            s3Service.deleteObjectFromBucket("robot-review-robot-images",fileName);
-        }
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        String formattedTimestamp = now.format(formatter);
-
-        String extension = getExtensionOfFile(file);
-        String contentType = determineContentType(extension);
-        String objectKey = "Robot%s_%s.%s".formatted(robotId,formattedTimestamp, extension);
-
-        if (contentType.isEmpty()) {
-            throw new IllegalArgumentException("Unsupported file type.");
-        }
-
-        s3Service.putObject(
-                "robot-review-robot-images",
-                objectKey,
-                file.getBytes(),
-                contentType
-        );
-        robot.setImage("https://robot-review-robot-images.s3.eu-central-1.amazonaws.com/" + objectKey);
-        robotRepository.save(robot);
-    }
 
     @Override
-    public void uploadRobotImageLocally(Long robotId, MultipartFile file) throws IOException {
+    public void uploadRobotImage(Long robotId, MultipartFile file) throws IOException {
         System.out.println("Starting image upload for robot ID: " + robotId);
 
         Optional<Robot> robotOptional = robotRepository.findById(robotId);
@@ -248,6 +221,10 @@ public class RobotServiceImpl implements RobotService {
         Optional<Robot> robot = robotRepository.findById(id);
         if (robot.isPresent()) {
             RobotDTO robotDTO = modelMapper.map(robot.get(), RobotDTO.class);
+            // Set full image URL
+            if (robot.get().getImage() != null) {
+                robotDTO.setImage(IMAGE_BASE_URL + robot.get().getImage());
+            }
             return Optional.of(robotDTO);
         }
         return Optional.empty();
@@ -266,7 +243,13 @@ public class RobotServiceImpl implements RobotService {
     @Override
     public List<RobotsListDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
-        return allRobots.stream().map(robot -> modelMapper.map(robot, RobotsListDTO.class)).toList();
+        return allRobots.stream().map(robot -> {
+            RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
+            if (robot.getImage() != null) {
+                dto.setImage(IMAGE_BASE_URL + robot.getImage());
+            }
+            return dto;
+        }).toList();
     }
 
 

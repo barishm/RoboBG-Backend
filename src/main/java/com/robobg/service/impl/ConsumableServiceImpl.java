@@ -5,7 +5,7 @@ import com.robobg.entity.Robot;
 import com.robobg.entity.dtos.ConsumableDTO.ConsumableDetailsDTO;
 import com.robobg.entity.dtos.ConsumableDTO.ConsumableListDTO;
 import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotDTO;
+import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.repository.ConsumableRepository;
 import com.robobg.repository.RobotRepository;
 import com.robobg.service.ConsumableService;
@@ -17,6 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -25,15 +28,15 @@ import java.util.stream.Collectors;
 @Service
 public class ConsumableServiceImpl implements ConsumableService {
 
+    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/consumables/";
+    private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images/consumables";
     private final ConsumableRepository consumableRepository;
     private final RobotRepository robotRepository;
-    private final S3Service s3Service;
     private final ModelMapper modelMapper;
     @Autowired
-    public ConsumableServiceImpl(ConsumableRepository consumableRepository, RobotRepository robotRepository, S3Service s3Service, ModelMapper modelMapper) {
+    public ConsumableServiceImpl(ConsumableRepository consumableRepository, RobotRepository robotRepository, ModelMapper modelMapper) {
         this.consumableRepository = consumableRepository;
         this.robotRepository = robotRepository;
-        this.s3Service = s3Service;
         this.modelMapper = modelMapper;
     }
 
@@ -41,7 +44,16 @@ public class ConsumableServiceImpl implements ConsumableService {
     @Override
     public List<ConsumableListDTO> getAllConsumables() {
         return consumableRepository.findAll().stream()
-                .map(consumable -> modelMapper.map(consumable, ConsumableListDTO.class))
+                .map(consumable -> {
+                    ConsumableListDTO dto = modelMapper.map(consumable, ConsumableListDTO.class);
+                    if (dto.getImages() != null) {
+                        List<String> fullImageUrls = dto.getImages().stream()
+                                .map(filename -> IMAGE_BASE_URL + filename)
+                                .collect(Collectors.toList());
+                        dto.setImages(fullImageUrls);
+                    }
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -91,8 +103,24 @@ public class ConsumableServiceImpl implements ConsumableService {
     }
 
     @Override
-    public void deleteConsumable(Long id) {
-        consumableRepository.deleteById(id);
+    public void deleteConsumable(Long id) throws EntityNotFoundException {
+        Optional<Consumable> consumableOptional = consumableRepository.findById(id);
+        if (consumableOptional.isPresent()) {
+            Consumable consumable = consumableOptional.get();
+
+            for (String imageName : consumable.getImages()) {
+                Path imagePath = Paths.get(SAVE_IMAGE_PATH, imageName);
+                try {
+                    Files.deleteIfExists(imagePath);
+                } catch (IOException e) {
+                    System.err.println("Failed to delete image: " + imagePath + " - " + e.getMessage());
+                }
+            }
+
+            consumableRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Consumable with ID " + id + " not found.");
+        }
     }
 
     @Override
@@ -100,6 +128,15 @@ public class ConsumableServiceImpl implements ConsumableService {
         Optional<Consumable> consumable = consumableRepository.findById(id);
         if (consumable.isPresent()) {
             ConsumableDetailsDTO consumableDTO = modelMapper.map(consumable.get(), ConsumableDetailsDTO.class);
+
+            // Append full URL to each image filename
+            if (consumableDTO.getImages() != null) {
+                List<String> fullImageUrls = consumableDTO.getImages().stream()
+                        .map(filename -> IMAGE_BASE_URL + filename)
+                        .collect(Collectors.toList());
+                consumableDTO.setImages(fullImageUrls);
+            }
+
             return Optional.of(consumableDTO);
         }
         return Optional.empty();
@@ -115,44 +152,35 @@ public class ConsumableServiceImpl implements ConsumableService {
 
         Consumable consumable = consumableOptional.get();
 
-        // Step 1: Delete existing images from S3
-        for (String imageUrl : consumable.getImages()) {
-            String objectKey = imageUrl.replace("https://robot-review-robot-images.s3.eu-central-1.amazonaws.com/", "");
-            s3Service.deleteObjectFromBucket("robot-review-robot-images", objectKey);
+        for (String imageName : consumable.getImages()) {
+            Path oldImagePath = Paths.get(SAVE_IMAGE_PATH, imageName);
+            Files.deleteIfExists(oldImagePath);
         }
 
-        // Step 2: Clear the image list in the Consumable object
         consumable.getImages().clear();
-        consumableRepository.save(consumable);  // Persist the empty image list
+        consumableRepository.save(consumable);
 
-        // Step 3: Upload new images (preserving order)
-        List<String> uploadedImageUrls = new ArrayList<>();
+        List<String> newImageNames = new ArrayList<>();
+        String basePath = SAVE_IMAGE_PATH;
 
         for (MultipartFile file : files) {
             String extension = FileUtils.getExtensionOfFile(file);
-            String contentType = FileUtils.determineContentType(extension);
-
-            if (contentType.isEmpty()) {
+            if (extension.isEmpty()) {
                 throw new IllegalArgumentException("Unsupported file type.");
             }
 
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
             String uniqueId = UUID.randomUUID().toString();
-            String objectKey = String.format("consumables/%s/Consumable%s_%s.%s",
-                    consumableId, consumableId, uniqueId, extension);
+            String fileName = String.format("Consumable%s_%s_%s.%s", consumableId, timestamp, uniqueId, extension);
 
-            s3Service.putObject(
-                    "robot-review-robot-images",
-                    objectKey,
-                    file.getBytes(),
-                    contentType
-            );
+            Path imagePath = Paths.get(basePath, fileName);
+            Files.createDirectories(imagePath.getParent());
+            Files.write(imagePath, file.getBytes());
 
-            String imageUrl = "https://robot-review-robot-images.s3.eu-central-1.amazonaws.com/" + objectKey;
-            uploadedImageUrls.add(imageUrl);  // Add in exact order
+            newImageNames.add(fileName);
         }
 
-        // Step 4: Save URLs to consumable (preserving the upload order)
-        consumable.setImages(uploadedImageUrls);
-        consumableRepository.save(consumable);  // Persist new list
+        consumable.setImages(newImageNames);
+        consumableRepository.save(consumable);
     }
 }
