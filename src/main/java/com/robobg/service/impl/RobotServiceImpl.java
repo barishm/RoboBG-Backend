@@ -19,6 +19,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -134,7 +137,7 @@ public class RobotServiceImpl implements RobotService {
         }
     }
 
-    @Override
+    @Override // old method for uploading images in s3 bucket
     public void uploadRobotImage(Long robotId, MultipartFile file) throws IOException {
         Optional<Robot> robotOptional = robotRepository.findById(robotId);
         if (robotOptional.isEmpty()) {
@@ -164,6 +167,45 @@ public class RobotServiceImpl implements RobotService {
                 contentType
         );
         robot.setImage("https://robot-review-robot-images.s3.eu-central-1.amazonaws.com/" + objectKey);
+        robotRepository.save(robot);
+    }
+
+    @Override
+    public void uploadRobotImageLocally(Long robotId, MultipartFile file) throws IOException {
+        Optional<Robot> robotOptional = robotRepository.findById(robotId);
+        if (robotOptional.isEmpty()) {
+            throw new IllegalArgumentException("Robot with ID " + robotId + " does not exist.");
+        }
+
+        Robot robot = robotOptional.get();
+
+        // Delete old image if exists
+        if (robot.getImage() != null) {
+            Path oldImagePath = Paths.get("/home/ubuntu/robobg/images", robot.getImage());
+            Files.deleteIfExists(oldImagePath);
+        }
+
+        // Generate new filename
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String timestamp = now.format(formatter);
+
+        String extension = getExtensionOfFile(file);
+        if (extension.isEmpty()) {
+            throw new IllegalArgumentException("Unsupported file type.");
+        }
+
+        String fileName = "Robot%s_%s.%s".formatted(robotId, timestamp, extension);
+        Path imagePath = Paths.get("/home/ubuntu/robobg/images", fileName);
+
+        // Ensure the images directory exists
+        Files.createDirectories(imagePath.getParent());
+
+        // Save the file locally
+        Files.write(imagePath, file.getBytes());
+
+        // Save only the filename or relative path, not full system path
+        robot.setImage(fileName);
         robotRepository.save(robot);
     }
 

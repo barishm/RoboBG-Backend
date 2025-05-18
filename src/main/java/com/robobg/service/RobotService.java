@@ -27,7 +27,9 @@ public interface RobotService {
 
     Optional<RobotDTO> getRobotById(Long id);
 
-    RobotResponse getRobots(HashSet<String> fields, int page, String model, List<String> brands,Integer startYear,Integer endYear,Integer minDustbinCapacity,Integer maxDustbinCapacity,Integer minSuctionPower,Integer maxSuctionPower);
+    void uploadRobotImageLocally(Long robotId, MultipartFile file) throws IOException;
+
+    RobotResponse getRobots(HashSet<String> fields, int page, String model, List<String> brands, Integer startYear, Integer endYear, Integer minDustbinCapacity, Integer maxDustbinCapacity, Integer minSuctionPower, Integer maxSuctionPower);
 
 
     void uploadRobotImage(Long robotId, MultipartFile file) throws IOException;

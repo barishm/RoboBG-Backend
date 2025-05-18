@@ -86,7 +86,7 @@ public class ModeratorController {
     @PostMapping("/robots/{robotId}/image")
     public void uploadRobotImage(@PathVariable("robotId") Long robotId,
                                  @RequestParam("file")MultipartFile file) throws IOException {
-        robotService.uploadRobotImage(robotId,file);
+        robotService.uploadRobotImageLocally(robotId,file);
 
     }
 
