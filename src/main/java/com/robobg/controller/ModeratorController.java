@@ -8,6 +8,8 @@ import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/moderator")
 public class ModeratorController {
+    private static final Logger logger = LoggerFactory.getLogger(ModeratorController.class);
     private final RobotService robotService;
     private final UserService userService;
     private final PurchaseLinkService purchaseLinkService;
@@ -86,6 +89,9 @@ public class ModeratorController {
     @PostMapping("/robots/{robotId}/image")
     public void uploadRobotImage(@PathVariable("robotId") Long robotId,
                                  @RequestParam("file")MultipartFile file) throws IOException {
+        logger.info("Received upload request for robotId: {}", robotId);
+        logger.info("File original name: {}", file.getOriginalFilename());
+        logger.info("File size: {} bytes", file.getSize());
         robotService.uploadRobotImageLocally(robotId,file);
 
     }
