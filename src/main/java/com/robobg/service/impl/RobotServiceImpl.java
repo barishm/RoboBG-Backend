@@ -139,6 +139,7 @@ public class RobotServiceImpl implements RobotService {
 
     @Override // old method for uploading images in s3 bucket
     public void uploadRobotImage(Long robotId, MultipartFile file) throws IOException {
+        System.out.println("Starting image upload in s3 bucket for robot ID: " + robotId);
         Optional<Robot> robotOptional = robotRepository.findById(robotId);
         if (robotOptional.isEmpty()) {
             throw new IllegalArgumentException("Robot with ID " + robotId + " does not exist.");
