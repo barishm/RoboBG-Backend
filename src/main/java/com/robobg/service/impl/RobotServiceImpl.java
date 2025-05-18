@@ -172,8 +172,11 @@ public class RobotServiceImpl implements RobotService {
 
     @Override
     public void uploadRobotImageLocally(Long robotId, MultipartFile file) throws IOException {
+        System.out.println("Starting image upload for robot ID: " + robotId);
+
         Optional<Robot> robotOptional = robotRepository.findById(robotId);
         if (robotOptional.isEmpty()) {
+            System.out.println("Robot not found: " + robotId);
             throw new IllegalArgumentException("Robot with ID " + robotId + " does not exist.");
         }
 
@@ -182,32 +185,34 @@ public class RobotServiceImpl implements RobotService {
         // Delete old image if exists
         if (robot.getImage() != null) {
             Path oldImagePath = Paths.get("/home/ubuntu/robobg/images", robot.getImage());
+            System.out.println("Deleting old image: " + oldImagePath);
             Files.deleteIfExists(oldImagePath);
         }
 
-        // Generate new filename
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String timestamp = now.format(formatter);
 
         String extension = getExtensionOfFile(file);
+        System.out.println("File extension: " + extension);
         if (extension.isEmpty()) {
+            System.out.println("Unsupported file type.");
             throw new IllegalArgumentException("Unsupported file type.");
         }
 
         String fileName = "Robot%s_%s.%s".formatted(robotId, timestamp, extension);
         Path imagePath = Paths.get("/home/ubuntu/robobg/images", fileName);
 
-        // Ensure the images directory exists
+        System.out.println("Saving image to: " + imagePath);
         Files.createDirectories(imagePath.getParent());
-
-        // Save the file locally
         Files.write(imagePath, file.getBytes());
 
-        // Save only the filename or relative path, not full system path
         robot.setImage(fileName);
         robotRepository.save(robot);
+
+        System.out.println("Image uploaded and saved successfully for robot ID: " + robotId);
     }
+
 
 
     private String getExtensionOfFile(MultipartFile file) {
