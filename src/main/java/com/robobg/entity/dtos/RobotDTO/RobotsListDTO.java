@@ -6,10 +6,19 @@ import java.util.List;
 
 @Data
 public class RobotsListDTO {
+    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/";
+
     private Long id;
     private String brand;
     private String model;
     private String image;
     private Integer qnaCount;
     private List<PurchaseLinkDTO> purchaseLinks;
+
+    public String getImage() {
+        if (image == null) {
+            return null;
+        }
+        return IMAGE_BASE_URL + image;
+    }
 }

@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 @Service
 public class ConsumableServiceImpl implements ConsumableService {
 
-    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/consumables/";
     private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images/consumables";
     private final ConsumableRepository consumableRepository;
     private final RobotRepository robotRepository;
@@ -44,16 +43,7 @@ public class ConsumableServiceImpl implements ConsumableService {
     @Override
     public List<ConsumableListDTO> getAllConsumables() {
         return consumableRepository.findAll().stream()
-                .map(consumable -> {
-                    ConsumableListDTO dto = modelMapper.map(consumable, ConsumableListDTO.class);
-                    if (dto.getImages() != null) {
-                        List<String> fullImageUrls = dto.getImages().stream()
-                                .map(filename -> IMAGE_BASE_URL + filename)
-                                .collect(Collectors.toList());
-                        dto.setImages(fullImageUrls);
-                    }
-                    return dto;
-                })
+                .map(consumable -> modelMapper.map(consumable, ConsumableListDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -125,21 +115,8 @@ public class ConsumableServiceImpl implements ConsumableService {
 
     @Override
     public Optional<ConsumableDetailsDTO> getConsumableById(Long id) {
-        Optional<Consumable> consumable = consumableRepository.findById(id);
-        if (consumable.isPresent()) {
-            ConsumableDetailsDTO consumableDTO = modelMapper.map(consumable.get(), ConsumableDetailsDTO.class);
-
-            // Append full URL to each image filename
-            if (consumableDTO.getImages() != null) {
-                List<String> fullImageUrls = consumableDTO.getImages().stream()
-                        .map(filename -> IMAGE_BASE_URL + filename)
-                        .collect(Collectors.toList());
-                consumableDTO.setImages(fullImageUrls);
-            }
-
-            return Optional.of(consumableDTO);
-        }
-        return Optional.empty();
+        return consumableRepository.findById(id)
+                .map(consumable -> modelMapper.map(consumable, ConsumableDetailsDTO.class));
     }
 
 
@@ -161,7 +138,6 @@ public class ConsumableServiceImpl implements ConsumableService {
         consumableRepository.save(consumable);
 
         List<String> newImageNames = new ArrayList<>();
-        String basePath = SAVE_IMAGE_PATH;
 
         for (MultipartFile file : files) {
             String extension = FileUtils.getExtensionOfFile(file);
@@ -173,7 +149,7 @@ public class ConsumableServiceImpl implements ConsumableService {
             String uniqueId = UUID.randomUUID().toString();
             String fileName = String.format("Consumable%s_%s_%s.%s", consumableId, timestamp, uniqueId, extension);
 
-            Path imagePath = Paths.get(basePath, fileName);
+            Path imagePath = Paths.get(SAVE_IMAGE_PATH, fileName);
             Files.createDirectories(imagePath.getParent());
             Files.write(imagePath, file.getBytes());
 

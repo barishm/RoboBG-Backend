@@ -35,7 +35,7 @@ public class RobotServiceImpl implements RobotService {
     private final ModelMapper modelMapper;
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
-    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/";
+    private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images";
 
     @Autowired
     public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
@@ -126,7 +126,7 @@ public class RobotServiceImpl implements RobotService {
 
             // Delete image from local file system
             if (imageFileName != null) {
-                Path imagePath = Paths.get("/home/ubuntu/robobg/images", imageFileName);
+                Path imagePath = Paths.get(SAVE_IMAGE_PATH, imageFileName);
                 try {
                     Files.deleteIfExists(imagePath);
                 } catch (IOException e) {
@@ -158,7 +158,7 @@ public class RobotServiceImpl implements RobotService {
 
         // Delete old image if exists
         if (robot.getImage() != null) {
-            Path oldImagePath = Paths.get("/home/ubuntu/robobg/images", robot.getImage());
+            Path oldImagePath = Paths.get(SAVE_IMAGE_PATH, robot.getImage());
             System.out.println("Deleting old image: " + oldImagePath);
             Files.deleteIfExists(oldImagePath);
         }
@@ -175,7 +175,7 @@ public class RobotServiceImpl implements RobotService {
         }
 
         String fileName = "Robot%s_%s.%s".formatted(robotId, timestamp, extension);
-        Path imagePath = Paths.get("/home/ubuntu/robobg/images", fileName);
+        Path imagePath = Paths.get(SAVE_IMAGE_PATH, fileName);
 
         System.out.println("Saving image to: " + imagePath);
         Files.createDirectories(imagePath.getParent());
@@ -216,18 +216,11 @@ public class RobotServiceImpl implements RobotService {
         }
         return null;
     }
+
     @Override
     public Optional<RobotDTO> getRobotById(Long id) {
-        Optional<Robot> robot = robotRepository.findById(id);
-        if (robot.isPresent()) {
-            RobotDTO robotDTO = modelMapper.map(robot.get(), RobotDTO.class);
-            // Set full image URL
-            if (robot.get().getImage() != null) {
-                robotDTO.setImage(IMAGE_BASE_URL + robot.get().getImage());
-            }
-            return Optional.of(robotDTO);
-        }
-        return Optional.empty();
+        return robotRepository.findById(id)
+                .map(robot -> modelMapper.map(robot, RobotDTO.class));
     }
 
     public void incrementQnaCount(RobotDTO robotDTO) {
@@ -243,13 +236,9 @@ public class RobotServiceImpl implements RobotService {
     @Override
     public List<RobotsListDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
-        return allRobots.stream().map(robot -> {
-            RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
-            if (robot.getImage() != null) {
-                dto.setImage(IMAGE_BASE_URL + robot.getImage());
-            }
-            return dto;
-        }).toList();
+        return allRobots.stream()
+                .map(robot -> modelMapper.map(robot, RobotsListDTO.class))
+                .toList();
     }
 
 
