@@ -20,6 +20,6 @@ public class ContactUsController {
     @PostMapping
     public ResponseEntity<String> handleFormSubmission(@Valid @RequestBody ContactUsFormDTO contactUsFormDTO) {
         contactUsService.handleContactUsForm(contactUsFormDTO);
-        return ResponseEntity.ok("Message sent successfully.");
+        return ResponseEntity.ok().build();
     }
 }
