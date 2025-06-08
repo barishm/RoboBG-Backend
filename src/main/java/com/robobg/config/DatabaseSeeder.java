@@ -50,15 +50,15 @@ public class DatabaseSeeder implements CommandLineRunner {
             System.out.println("THERE IS ALREADY AN ADMIN");
         }
 
-        InputStream inputStream = getClass().getResourceAsStream("/robots.json");
-        CreateRobotDTO[] data = objectMapper.readValue(inputStream, CreateRobotDTO[].class);
-
-        List<CreateRobotDTO> robotsToSave = Arrays.stream(data)
-                .filter(robot -> !robotRepository.existsByModel(robot.getModel()))
-                .toList();
-
-        for (CreateRobotDTO robot : robotsToSave) {
-            robotService.saveRobot(robot);
-        }
+//        InputStream inputStream = getClass().getResourceAsStream("/robots.json");
+//        CreateRobotDTO[] data = objectMapper.readValue(inputStream, CreateRobotDTO[].class);
+//
+//        List<CreateRobotDTO> robotsToSave = Arrays.stream(data)
+//                .filter(robot -> !robotRepository.existsByModel(robot.getModel()))
+//                .toList();
+//
+//        for (CreateRobotDTO robot : robotsToSave) {
+//            robotService.saveRobot(robot);
+//        }
     }
 }
