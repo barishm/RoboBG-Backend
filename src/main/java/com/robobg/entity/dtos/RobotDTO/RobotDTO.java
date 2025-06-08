@@ -36,11 +36,4 @@ public class RobotDTO {
     private Integer qnaCount;
     private List<ConsumableTitleDTO> consumables;
 
-    public String getImage() {
-        if (image == null) {
-            return null;
-        }
-        return IMAGE_BASE_URL + image;
-    }
-
 }

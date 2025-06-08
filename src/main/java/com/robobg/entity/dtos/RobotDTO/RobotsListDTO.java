@@ -14,11 +14,4 @@ public class RobotsListDTO {
     private String image;
     private Integer qnaCount;
     private List<PurchaseLinkDTO> purchaseLinks;
-
-    public String getImage() {
-        if (image == null) {
-            return null;
-        }
-        return IMAGE_BASE_URL + image;
-    }
 }

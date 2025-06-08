@@ -36,6 +36,7 @@ public class RobotServiceImpl implements RobotService {
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
     private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images";
+    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/";
 
     @Autowired
     public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
@@ -51,7 +52,13 @@ public class RobotServiceImpl implements RobotService {
         return robotRepository.findAllBests().stream()
                 .filter(robot -> Boolean.TRUE.equals(robot.getBests()))
                 .limit(9)
-                .map(robot -> modelMapper.map(robot, RobotsListDTO.class))
+                .map(robot -> {
+                    RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
+                    if (dto.getImage() != null) {
+                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
+                    }
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -220,7 +227,13 @@ public class RobotServiceImpl implements RobotService {
     @Override
     public Optional<RobotDTO> getRobotById(Long id) {
         return robotRepository.findById(id)
-                .map(robot -> modelMapper.map(robot, RobotDTO.class));
+                .map(robot -> {
+                    RobotDTO dto = modelMapper.map(robot, RobotDTO.class);
+                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
+                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
+                    }
+                    return dto;
+                });
     }
 
     public void incrementQnaCount(RobotDTO robotDTO) {
@@ -237,7 +250,13 @@ public class RobotServiceImpl implements RobotService {
     public List<RobotsListDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
         return allRobots.stream()
-                .map(robot -> modelMapper.map(robot, RobotsListDTO.class))
+                .map(robot -> {
+                    RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
+                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
+                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
+                    }
+                    return dto;
+                })
                 .toList();
     }
 
