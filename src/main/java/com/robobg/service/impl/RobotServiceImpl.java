@@ -54,7 +54,7 @@ public class RobotServiceImpl implements RobotService {
                 .limit(9)
                 .map(robot -> {
                     RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
-                    if (dto.getImage() != null) {
+                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
                         dto.setImage(IMAGE_BASE_URL + dto.getImage());
                     }
                     return dto;
