@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
@@ -27,6 +28,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     private String adminUsername;
     @Value("${ADMIN_PASSWORD}")
     private String adminPassword;
+    @Value("${ADMIN_EMAIL}")
+    private String adminEmail;
 
 
     public DatabaseSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder, ObjectMapper objectMapper, RobotRepository robotRepository, RobotServiceImpl robotService) {
@@ -39,15 +42,28 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(userRepository.findByUsername(adminUsername).isEmpty()) {
+        Optional<User> existingAdminOpt = userRepository.findByUsername(adminUsername);
+
+        if (existingAdminOpt.isEmpty()) {
+            // Admin does not exist, create a new one
             User user = new User();
             user.setUsername(adminUsername);
             user.setPassword(passwordEncoder.encode(adminPassword));
             user.setRole(Role.ADMIN);
+            user.setEmail(adminEmail);
             userRepository.save(user);
             System.out.println("CREATED ADMIN");
         } else {
-            System.out.println("THERE IS ALREADY AN ADMIN");
+            User existingAdmin = existingAdminOpt.get();
+
+            // Check if email is null or empty, and update if needed
+            if (existingAdmin.getEmail() == null || existingAdmin.getEmail().isBlank()) {
+                existingAdmin.setEmail(adminEmail);
+                userRepository.save(existingAdmin);
+                System.out.println("UPDATED ADMIN EMAIL");
+            } else {
+                System.out.println("THERE IS ALREADY AN ADMIN WITH EMAIL");
+            }
         }
 
 //        InputStream inputStream = getClass().getResourceAsStream("/robots.json");

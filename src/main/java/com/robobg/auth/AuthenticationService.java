@@ -5,12 +5,14 @@ import com.robobg.config.JwtService;
 import com.robobg.entity.Role;
 import com.robobg.entity.User;
 import com.robobg.repository.UserRepository;
+import com.robobg.service.impl.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailService;
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (request.getPassword().equals(request.getConfirmPassword())) {
@@ -80,5 +83,26 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(),authResponse);
             }
         }
+    }
+
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        String resetToken = jwtService.generatePasswordResetToken(user);
+        emailService.sendPasswordResetEmail(user.getEmail(), resetToken);
+    }
+
+    public void resetPassword(String token, String newPassword) {
+        String email = jwtService.extractUsername(token);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!jwtService.isValidPasswordResetToken(token, user)) {
+            throw new IllegalArgumentException("Invalid or expired token");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }
