@@ -1,9 +1,7 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.ConsumableDTO.ConsumableDetailsDTO;
-import com.robobg.entity.dtos.ConsumableDTO.ConsumableListDTO;
-import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotDTO;
+import com.robobg.dtos.ConsumableDTO.ConsumableDetailsDTO;
+import com.robobg.dtos.ConsumableDTO.ConsumableListDTO;
 import com.robobg.service.ConsumableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

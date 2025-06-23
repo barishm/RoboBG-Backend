@@ -1,7 +1,7 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
-import com.robobg.entity.dtos.UserDTO.UserUsernameEmailDTO;
+import com.robobg.dtos.UserDTO.UserIdUsernameRoleDTO;
+import com.robobg.dtos.UserDTO.UserUsernameEmailDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

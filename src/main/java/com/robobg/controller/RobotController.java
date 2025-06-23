@@ -1,7 +1,8 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.QnaDTO.QuestionWithAnswersDTO;
-import com.robobg.entity.dtos.RobotDTO.*;
+import com.robobg.dtos.QnaDTO.QuestionWithAnswersDTO;
+import com.robobg.dtos.RobotDTO.RobotDTO;
+import com.robobg.dtos.RobotDTO.RobotsListDTO;
 import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.service.QuestionService;
 import com.robobg.service.RobotService;

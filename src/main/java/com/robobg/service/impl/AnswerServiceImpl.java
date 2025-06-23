@@ -3,7 +3,7 @@ package com.robobg.service.impl;
 import com.robobg.config.JwtService;
 import com.robobg.entity.Answer;
 import com.robobg.entity.User;
-import com.robobg.entity.dtos.QnaDTO.AnswerCreateDTO;
+import com.robobg.dtos.QnaDTO.AnswerCreateDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.repository.AnswerRepository;
 import com.robobg.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.robobg.entity.oldDtos;
 
-import com.robobg.entity.dtos.RobotDTO.PurchaseLinkDTO;
+import com.robobg.dtos.RobotDTO.PurchaseLinkDTO;
 import lombok.Data;
 
 import java.util.List;

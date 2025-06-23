@@ -1,6 +1,6 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
+import com.robobg.dtos.RobotDTO.CreatePurchaseLinkDTO;
 import org.springframework.stereotype.Service;
 
 @Service

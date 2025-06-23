@@ -2,9 +2,9 @@ package com.robobg.service.impl;
 
 import com.robobg.entity.Consumable;
 import com.robobg.entity.Robot;
-import com.robobg.entity.dtos.ConsumableDTO.ConsumableDetailsDTO;
-import com.robobg.entity.dtos.ConsumableDTO.ConsumableListDTO;
-import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
+import com.robobg.dtos.ConsumableDTO.ConsumableDetailsDTO;
+import com.robobg.dtos.ConsumableDTO.ConsumableListDTO;
+import com.robobg.dtos.ConsumableDTO.CreateConsumableDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.repository.ConsumableRepository;
 import com.robobg.repository.RobotRepository;

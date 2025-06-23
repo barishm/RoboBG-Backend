@@ -1,11 +1,11 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.ConsumableDTO.CreateConsumableDTO;
-import com.robobg.entity.dtos.QnaDTO.LatestQuestionsDTO;
-import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
-import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
-import com.robobg.entity.dtos.RobotDTO.CreateRobotDTO;
-import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
+import com.robobg.dtos.ConsumableDTO.CreateConsumableDTO;
+import com.robobg.dtos.QnaDTO.LatestQuestionsDTO;
+import com.robobg.dtos.RobotDTO.CreateMostComparedDTO;
+import com.robobg.dtos.RobotDTO.CreatePurchaseLinkDTO;
+import com.robobg.dtos.RobotDTO.CreateRobotDTO;
+import com.robobg.dtos.UserDTO.UserIdUsernameRoleDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.service.*;

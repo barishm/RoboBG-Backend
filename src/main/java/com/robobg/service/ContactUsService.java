@@ -1,6 +1,6 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.ContactUsFormDTO;
+import com.robobg.dtos.ContactUsFormDTO;
 import org.springframework.stereotype.Service;
 
 @Service

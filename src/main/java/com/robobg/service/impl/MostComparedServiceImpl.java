@@ -1,9 +1,9 @@
 package com.robobg.service.impl;
 
 import com.robobg.entity.MostCompared;
-import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
-import com.robobg.entity.dtos.RobotDTO.MostComparedDTO;
-import com.robobg.entity.dtos.RobotDTO.RobotModelDTO;
+import com.robobg.dtos.RobotDTO.CreateMostComparedDTO;
+import com.robobg.dtos.RobotDTO.MostComparedDTO;
+import com.robobg.dtos.RobotDTO.RobotModelDTO;
 import com.robobg.repository.MostComparedRepository;
 import com.robobg.repository.RobotRepository;
 import com.robobg.service.MostComparedService;

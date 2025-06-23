@@ -1,6 +1,6 @@
 package com.robobg.service.impl;
 
-import com.robobg.entity.dtos.ContactUsFormDTO;
+import com.robobg.dtos.ContactUsFormDTO;
 import com.robobg.service.ContactUsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

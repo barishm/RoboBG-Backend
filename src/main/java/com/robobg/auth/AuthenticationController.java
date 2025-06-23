@@ -1,7 +1,7 @@
 package com.robobg.auth;
 
-import com.robobg.entity.dtos.ForgotPasswordRequest;
-import com.robobg.entity.dtos.ResetPasswordRequest;
+import com.robobg.dtos.ForgotPasswordRequest;
+import com.robobg.dtos.ResetPasswordRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

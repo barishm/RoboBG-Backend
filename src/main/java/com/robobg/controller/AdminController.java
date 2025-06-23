@@ -1,7 +1,7 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.UserDTO.UserIdUsernameRoleDTO;
-import com.robobg.entity.dtos.UserDTO.UserUsernameEmailDTO;
+import com.robobg.dtos.UserDTO.UserIdUsernameRoleDTO;
+import com.robobg.dtos.UserDTO.UserUsernameEmailDTO;
 import com.robobg.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

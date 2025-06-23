@@ -1,6 +1,6 @@
 package com.robobg.service.impl;
 
-import com.robobg.entity.dtos.ContactUsFormDTO;
+import com.robobg.dtos.ContactUsFormDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

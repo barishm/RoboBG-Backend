@@ -1,6 +1,6 @@
 package com.robobg.controller;
 
-import com.robobg.entity.dtos.RobotDTO.MostComparedDTO;
+import com.robobg.dtos.RobotDTO.MostComparedDTO;
 import com.robobg.service.MostComparedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

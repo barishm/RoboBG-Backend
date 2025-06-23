@@ -1,6 +1,8 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.RobotDTO.*;
+import com.robobg.dtos.RobotDTO.CreateRobotDTO;
+import com.robobg.dtos.RobotDTO.RobotDTO;
+import com.robobg.dtos.RobotDTO.RobotsListDTO;
 import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.exceptions.RobotAlreadyExistsException;
 import org.springframework.data.crossstore.ChangeSetPersister;

@@ -1,7 +1,7 @@
 package com.robobg.controller;
 
 
-import com.robobg.entity.dtos.ContactUsFormDTO;
+import com.robobg.dtos.ContactUsFormDTO;
 import com.robobg.service.ContactUsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

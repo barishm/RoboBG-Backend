@@ -1,7 +1,7 @@
 package com.robobg.service.impl;
 
 import com.robobg.entity.PurchaseLink;
-import com.robobg.entity.dtos.RobotDTO.CreatePurchaseLinkDTO;
+import com.robobg.dtos.RobotDTO.CreatePurchaseLinkDTO;
 import com.robobg.repository.PurchaseLinkRepository;
 import com.robobg.service.PurchaseLinkService;
 import org.modelmapper.ModelMapper;

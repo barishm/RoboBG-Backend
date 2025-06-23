@@ -1,9 +1,9 @@
 package com.robobg.service;
 
 import com.robobg.entity.Question;
-import com.robobg.entity.dtos.QnaDTO.LatestQuestionsDTO;
-import com.robobg.entity.dtos.QnaDTO.QuestionCreateDTO;
-import com.robobg.entity.dtos.QnaDTO.QuestionWithAnswersDTO;
+import com.robobg.dtos.QnaDTO.LatestQuestionsDTO;
+import com.robobg.dtos.QnaDTO.QuestionCreateDTO;
+import com.robobg.dtos.QnaDTO.QuestionWithAnswersDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;

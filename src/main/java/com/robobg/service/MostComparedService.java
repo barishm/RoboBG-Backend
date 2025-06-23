@@ -1,7 +1,7 @@
 package com.robobg.service;
 
-import com.robobg.entity.dtos.RobotDTO.CreateMostComparedDTO;
-import com.robobg.entity.dtos.RobotDTO.MostComparedDTO;
+import com.robobg.dtos.RobotDTO.CreateMostComparedDTO;
+import com.robobg.dtos.RobotDTO.MostComparedDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
