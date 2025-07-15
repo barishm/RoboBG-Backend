@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/v1/chatbot")
 public class ChatbotController {
@@ -23,7 +21,7 @@ public class ChatbotController {
     }
 
     @PostMapping
-    public ResponseEntity<?> chat(@RequestBody ChatRequest request) throws RateLimitExceededException {
+    public ResponseEntity<?> chat(@RequestBody ChatRequest request) {
         ChatRequest response = chatbotService.getAIResponse(request);
         return ResponseEntity.ok(response);
     }
