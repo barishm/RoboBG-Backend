@@ -28,6 +28,4 @@ public class AdminController {
     public List<UserUsernameEmailDTO> getAllModerators() {
         return userService.getAllModerators();
     }
-
-
 }

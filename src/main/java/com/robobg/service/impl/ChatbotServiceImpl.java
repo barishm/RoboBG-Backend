@@ -16,6 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.time.Duration.*;
@@ -67,44 +68,54 @@ public class ChatbotServiceImpl {
     }
 
     public ChatRequest getAIResponse(ChatRequest chatRequest) {
-        List<ChatMessageDTO> messages = chatRequest.getMessages();
+        ensureDeveloperPrompt(chatRequest);
 
-        // Check if there's already a "developer" message
-        boolean hasDeveloperMessage = chatRequest.getMessages().stream()
+        if (!validateRequest(chatRequest)) {
+            return chatRequest;
+        }
+
+        HttpEntity<Map<String, Object>> request = buildOpenAIRequest(chatRequest.getMessages());
+        ResponseEntity<String> response = callOpenAI(request);
+
+        addAssistantOrFallback(chatRequest, parseOpenAIResponse(response));
+        return chatRequest;
+    }
+
+    private void ensureDeveloperPrompt(ChatRequest chatRequest) {
+        boolean hasDeveloper = chatRequest.getMessages().stream()
                 .anyMatch(m -> "developer".equals(m.getRole()));
-
-        // If not, add it to the beginning
-        if (!hasDeveloperMessage) {
+        if (!hasDeveloper) {
             chatRequest.getMessages().add(0, new ChatMessageDTO("developer", developerPrompt));
         }
+    }
 
+    private boolean validateRequest(ChatRequest chatRequest) {
+        List<ChatMessageDTO> messages = chatRequest.getMessages();
 
-        // --- RATE LIMIT CHECK ---
         if (!rateLimiter.tryConsume(1)) {
             chatRequest.addMessage("assistant", ASSISTANT_SUPPORT_MESSAGE);
-            return chatRequest;
+            return false;
         }
 
-        // --- MAX MESSAGE LENGTH CHECK ---
-        boolean hasTooLongUserMessage = messages.stream()
-                .anyMatch(m -> "user".equals(m.getRole()) && m.getContent() != null && m.getContent().length() > MAX_MESSAGE_CHARACTERS);
-
-        if (hasTooLongUserMessage) {
+        boolean tooLong = messages.stream()
+                .anyMatch(m -> "user".equals(m.getRole())
+                        && m.getContent() != null
+                        && m.getContent().length() > MAX_MESSAGE_CHARACTERS);
+        if (tooLong) {
             chatRequest.addMessage("assistant", ASSISTANT_SUPPORT_MESSAGE);
-            return chatRequest;
+            return false;
         }
 
-        // --- MAX MESSAGE COUNT CHECK ---
         if (messages.size() >= MAX_MESSAGES) {
             chatRequest.addMessage("assistant", ASSISTANT_SUPPORT_MESSAGE);
-            return chatRequest;
+            return false;
         }
 
+        return true;
+    }
 
-
-        // --- Prepare API request ---
-
-        List<Map<String, String>> openAiRequestObject = messages.stream()
+    private HttpEntity<Map<String, Object>> buildOpenAIRequest(List<ChatMessageDTO> messages) {
+        List<Map<String, String>> messagePayload = messages.stream()
                 .map(m -> Map.of("role", m.getRole(), "content", m.getContent()))
                 .collect(Collectors.toList());
 
@@ -112,33 +123,38 @@ public class ChatbotServiceImpl {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + openaiApiKey);
 
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("model", "gpt-4.1-nano");
-        requestBody.put("max_completion_tokens", MAX_TOKEN_USAGE_BY_API);
-        requestBody.put("messages", openAiRequestObject);
+        Map<String, Object> body = new HashMap<>();
+        body.put("model", "gpt-4.1-nano");
+        body.put("max_completion_tokens", MAX_TOKEN_USAGE_BY_API);
+        body.put("messages", messagePayload);
 
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(
+        return new HttpEntity<>(body, headers);
+    }
+
+    private ResponseEntity<String> callOpenAI(HttpEntity<Map<String, Object>> request) {
+        return restTemplate.postForEntity(
                 "https://api.openai.com/v1/chat/completions",
                 request,
                 String.class
         );
-
-        // --- Handle response ---
-        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode root = mapper.readTree(response.getBody());
-                String reply = root.path("choices").get(0).path("message").path("content").asText();
-
-                chatRequest.addMessage("assistant", reply);
-            } catch (Exception e) {
-                chatRequest.addMessage("assistant", ASSISTANT_SUPPORT_MESSAGE);
-            }
-        } else {
-            chatRequest.addMessage("assistant", ASSISTANT_SUPPORT_MESSAGE);
-        }
-
-        return chatRequest;
     }
+
+    private Optional<String> parseOpenAIResponse(ResponseEntity<String> response) {
+        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            return Optional.empty();
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response.getBody());
+            String reply = root.path("choices").get(0).path("message").path("content").asText(null);
+            return Optional.ofNullable(reply).filter(r -> !r.isBlank());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    private void addAssistantOrFallback(ChatRequest chatRequest, Optional<String> maybeReply) {
+        chatRequest.addMessage("assistant", maybeReply.orElse(ASSISTANT_SUPPORT_MESSAGE));
+    }
+
 }
