@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class ConsumableListDTO {
-    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/consumables/";
+    private static final String IMAGE_BASE_URL = "https://api.robobg.com/images/consumables/";
 
     private Long id;
     private String title;

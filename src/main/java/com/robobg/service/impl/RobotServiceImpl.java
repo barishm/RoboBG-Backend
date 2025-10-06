@@ -39,7 +39,7 @@ public class RobotServiceImpl implements RobotService {
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
     private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images";
-    private static final String IMAGE_BASE_URL = "https://api.barishm.com/images/";
+    private static final String IMAGE_BASE_URL = "https://api.robobg.com/images/";
 
     @Autowired
     public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
