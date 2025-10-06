@@ -1,0 +1,1493 @@
+[
+  {
+    "brand": "Roborock",
+    "model": "Roborock S5 Max",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "60",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "2000",
+      "cleaningArea": "250",
+      "dustbinCapacity": "560",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "280",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180 min",
+      "chargingTime": "240 min",
+      "ratedPower": "58"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": false,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.5",
+      "width": "35",
+      "height": "9.65",
+      "inTheBox": "water tank, mopping pad, user manual, AC adapter, charging dock",
+      "releaseDate": "2019-09-01"
+    }
+  },
+  {
+    "brand": "Roborock",
+    "model": "Roborock Q Revo",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": null,
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "5500",
+      "cleaningArea": null,
+      "dustbinCapacity": null,
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": true,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": null,
+      "height": null,
+      "inTheBox": null,
+      "releaseDate": "2023-04-01"
+    }
+  },
+  {
+    "brand": "Roborock",
+    "model": "Roborock S8+",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "68",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "6000",
+      "cleaningArea": "300",
+      "dustbinCapacity": "350",
+      "disposableDustBagCapacity": "2.5",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "300",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": true,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180",
+      "chargingTime": "240",
+      "ratedPower": "69"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "4.9",
+      "width": "35.3",
+      "height": "9.65",
+      "inTheBox": null,
+      "releaseDate": "2023-01-01"
+    }
+  },
+  {
+    "brand": "Roborock",
+    "model": "Roborock S7 Pro Ultra",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "67",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "5100",
+      "cleaningArea": "300",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "2.5",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "200",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": true,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180",
+      "chargingTime": "240",
+      "ratedPower": "74"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "4.7",
+      "width": "35",
+      "height": "9.65",
+      "inTheBox": "water tank, mopping pad, user manual, AC adapter base",
+      "releaseDate": "2022-06-01"
+    }
+  },
+  {
+    "brand": "360",
+    "model": "360 S6 Robot Vacuum Cleaner",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "55",
+    "display": false,
+    "sideBrushes": "2",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "1800",
+      "cleaningArea": "200",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": "17",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": false,
+      "waterTankCapacity": "80",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "3200",
+      "batteryLife": "90",
+      "chargingTime": "150",
+      "ratedPower": "30"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": false,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": false,
+      "noMopZones": false
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.5",
+      "width": "35",
+      "height": "10",
+      "inTheBox": "charging base, adapter, filter, water tank, mop, cleaning tool, English manual",
+      "releaseDate": "2018-01-01"
+    }
+  },
+  {
+    "brand": "Roborock",
+    "model": "Roborock S6 MaxV",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "67",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "2500",
+      "cleaningArea": "250",
+      "dustbinCapacity": "460",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "300",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180",
+      "chargingTime": "300",
+      "ratedPower": "66"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": null,
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.7",
+      "width": "35",
+      "height": "9.6",
+      "inTheBox": null,
+      "releaseDate": "2020-04-01"
+    }
+  },
+  {
+    "brand": "Xiaomi",
+    "model": "Xiaomi Robot Vacuum X10+",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "65",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "4000",
+      "cleaningArea": "200",
+      "dustbinCapacity": "350",
+      "disposableDustBagCapacity": "2.5",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "180",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": true,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "120",
+      "chargingTime": "260",
+      "ratedPower": "70"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": null,
+      "googleAssistantSupport": null,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": false,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.8",
+      "width": "35",
+      "height": "9.7",
+      "inTheBox": null,
+      "releaseDate": "2022-04-01"
+    }
+  },
+  {
+    "brand": "Xiaomi",
+    "model": "Xiaomi Mi Robot Vacuum-Mop 2 Ultra",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "64",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "3000",
+      "cleaningArea": "200",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "4",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "200",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "150",
+      "chargingTime": "300",
+      "ratedPower": "50"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": null,
+      "googleAssistantSupport": null,
+      "magneticVirtualWalls": null
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": null,
+      "manualMovementControl": null,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": null,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "35",
+      "height": "9.8",
+      "inTheBox": null,
+      "releaseDate": "2021-06-01"
+    }
+  },
+  {
+    "brand": "Xiaomi",
+    "model": "Xiaomi Mijia 1S Robot Vacuum Cleaner",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS, camera",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "68",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "2000",
+      "cleaningArea": "250",
+      "dustbinCapacity": "420",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": "15",
+      "hepaFilter": true,
+      "washableFilter": null
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "150",
+      "chargingTime": "240",
+      "ratedPower": "58"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": false,
+      "googleAssistantSupport": false,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": false
+    },
+    "sensor": {
+      "carpetBoost": false,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.8",
+      "width": "34.5",
+      "height": "9.6",
+      "inTheBox": "sweeping robot, charging dock, main brush cleaning tool, power cable",
+      "releaseDate": "2019-04-01"
+    }
+  },
+  {
+    "brand": "SAMSUNG",
+    "model": "SAMSUNG Jet Bot AI+",
+    "bests": true,
+    "mapping": true,
+    "mappingSensorType": "LDS, camera",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": null,
+    "display": false,
+    "sideBrushes": "0",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": null,
+      "cleaningArea": "100",
+      "dustbinCapacity": "250",
+      "disposableDustBagCapacity": "2.5",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "15",
+      "hepaFilter": true,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": null,
+      "autoMopLifting": null,
+      "autoWaterTankRefilling": null,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": null,
+      "batteryLife": "90",
+      "chargingTime": null,
+      "ratedPower": "30"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": true
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": false,
+      "manualMovementControl": null,
+      "selectedRoomCleaning": true,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "35",
+      "height": "10",
+      "inTheBox": null,
+      "releaseDate": "2021-01-01"
+    }
+  },
+  {
+    "brand": "SAMSUNG",
+    "model": "Samsung POWERbot R7070 Pet",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "camera",
+    "highPrecisionMap": false,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "71",
+    "display": true,
+    "sideBrushes": null,
+    "voicePrompts": false,
+    "cleaningFeatures": {
+      "suctionPower": "3510",
+      "cleaningArea": null,
+      "dustbinCapacity": "300",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": null,
+      "hepaFilter": false,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": null,
+      "batteryLife": "90",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": true,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": null,
+      "digitalBlockedAreas": false,
+      "zonedCleaning": false,
+      "multiFloorMaps": false,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": false,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "4.3",
+      "width": "34",
+      "height": "9.6",
+      "inTheBox": "charging base, magnetic stripe, extra filter, remote control",
+      "releaseDate": null
+    }
+  },
+  {
+    "brand": "SAMSUNG",
+    "model": "Samsung POWERbot R9000",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "camera",
+    "highPrecisionMap": false,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": null,
+    "display": false,
+    "sideBrushes": null,
+    "voicePrompts": null,
+    "cleaningFeatures": {
+      "suctionPower": null,
+      "cleaningArea": null,
+      "dustbinCapacity": "700",
+      "disposableDustBagCapacity": null,
+      "autoDirtDisposal": false,
+      "barrierCrossHeight": null,
+      "hepaFilter": false,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": null,
+      "batteryLife": "60",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": false,
+      "ir_Rf_RemoteControl": true,
+      "wifiSmartphoneApp": false,
+      "wifiFrequencyBand": null,
+      "amazonAlexaSupport": false,
+      "googleAssistantSupport": false,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": null,
+      "digitalBlockedAreas": false,
+      "zonedCleaning": false,
+      "multiFloorMaps": false,
+      "manualMovementControl": false,
+      "selectedRoomCleaning": false,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": false,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "4.5",
+      "width": "37.8",
+      "height": "13.4",
+      "inTheBox": null,
+      "releaseDate": null
+    }
+  },
+  {
+    "brand": "Eufy",
+    "model": "Eufy Clean RoboVac L35 Hybrid+",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "62",
+    "display": false,
+    "sideBrushes": "2",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "3200",
+      "cleaningArea": "200",
+      "dustbinCapacity": "200",
+      "disposableDustBagCapacity": "3",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "200",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "145",
+      "chargingTime": "240",
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": null
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": null,
+      "selectedRoomCleaning": true,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": "3.9",
+      "width": "35",
+      "height": "10",
+      "inTheBox": "robot vacuum, empty-base, power cord, dust bag, cleaning tool, spare filter, spare side brush, spare mopping cloth, user manual, quick start guide, warranty, water proof mat",
+      "releaseDate": "2022-08-01"
+    }
+  },
+  {
+    "brand": "Dreame",
+    "model": "Dreame Z10 Pro",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS+DToF",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "62",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "4000",
+      "cleaningArea": "250",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "4",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "150",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "150",
+      "chargingTime": null,
+      "ratedPower": "46"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": null,
+      "height": null,
+      "inTheBox": null,
+      "releaseDate": "2021-08-01"
+    }
+  },
+  {
+    "brand": "iRobot",
+    "model": "iRobot Roomba Combo j7+",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "camera, gyroscope",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "68",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": null,
+      "cleaningArea": "185",
+      "dustbinCapacity": null,
+      "disposableDustBagCapacity": "1",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "16",
+      "hepaFilter": true,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "210",
+      "vibratingMoppingPad": false,
+      "autoMopLifting": true,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "2210",
+      "batteryLife": "75",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4 / 5",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": true
+    },
+    "appFeatures": {
+      "realTimeTracking": false,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": true,
+      "fullDustbinSensor": true
+    },
+    "otherSpecifications": {
+      "weight": "3.3",
+      "width": "33.8",
+      "height": "8.63",
+      "inTheBox": "clean base automatic dirt disposal, dirt disposal bag, power cord, mopping pad, hard floor cleaning solution, hardwood cleaning solution, extra high-efficiency filter, extra side brush",
+      "releaseDate": "2022-09-01"
+    }
+  },
+  {
+    "brand": "iRobot",
+    "model": "iRobot Roomba S9+",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "camera",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": null,
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "2200",
+      "cleaningArea": "200",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "1",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": "3300",
+      "batteryLife": "120",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4 / 5",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": true
+    },
+    "appFeatures": {
+      "realTimeTracking": false,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": false,
+      "cliffSensor": true,
+      "dirtSensor": true,
+      "fullDustbinSensor": true
+    },
+    "otherSpecifications": {
+      "weight": "3.37",
+      "width": "33.88",
+      "height": "9.22",
+      "inTheBox": "robot vacuum, AC cord, charging dock, dual-mode virtual barrier, hepa filter, extra side-brush",
+      "releaseDate": "2019-05-01"
+    }
+  },
+  {
+    "brand": "iRobot",
+    "model": "iRobot Roomba i3+",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "gyroscope + optic motion tracking",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "68",
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": null,
+      "cleaningArea": "170",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "1",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": false
+    },
+    "moppingFeatures": {
+      "wetMopping": false,
+      "electricWaterFlowControl": null,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": null
+    },
+    "battery": {
+      "batteryCapacity": "1800",
+      "batteryLife": "75",
+      "chargingTime": "150",
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4 / 5",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": true
+    },
+    "appFeatures": {
+      "realTimeTracking": false,
+      "digitalBlockedAreas": false,
+      "zonedCleaning": false,
+      "multiFloorMaps": false,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": null
+    },
+    "sensor": {
+      "carpetBoost": false,
+      "cliffSensor": true,
+      "dirtSensor": true,
+      "fullDustbinSensor": true
+    },
+    "otherSpecifications": {
+      "weight": "4.7",
+      "width": "33.8",
+      "height": "9.2",
+      "inTheBox": "1 robot vacuum, 1 auto emptying base, 2 dirt disposal bags, 1 extra filter",
+      "releaseDate": "2020-09-01"
+    }
+  },
+  {
+    "brand": "Dreame",
+    "model": "Dreame X10 Ultra",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": null,
+    "display": false,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "5500",
+      "cleaningArea": null,
+      "dustbinCapacity": "350",
+      "disposableDustBagCapacity": "3.2",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": null,
+      "vibratingMoppingPad": false,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "180",
+      "chargingTime": null,
+      "ratedPower": null
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "35",
+      "height": "10.3",
+      "inTheBox": null,
+      "releaseDate": "2023-01-01"
+    }
+  },
+  {
+    "brand": "Roidmi",
+    "model": "Roidmi Eva",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": false,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "60",
+    "display": true,
+    "sideBrushes": "1",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "3200",
+      "cleaningArea": "200",
+      "dustbinCapacity": "500",
+      "disposableDustBagCapacity": "3",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "200",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "220",
+      "chargingTime": "240",
+      "ratedPower": "65"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": false
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": false,
+      "manualMovementControl": null,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "33",
+      "height": "10.6",
+      "inTheBox": null,
+      "releaseDate": "2022-03-01"
+    }
+  },
+  {
+    "brand": "ECOVACS",
+    "model": "Ecovacs Deebot X1 OMNI",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "68",
+    "display": false,
+    "sideBrushes": "2",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "5000",
+      "cleaningArea": "200",
+      "dustbinCapacity": "500",
+      "disposableDustBagCapacity": "2.5",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "80",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": true,
+      "autoMopWashing": true
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "120",
+      "chargingTime": "360",
+      "ratedPower": "45"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": null,
+      "googleAssistantSupport": null,
+      "magneticVirtualWalls": null
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": null
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "36.2",
+      "height": "10.3",
+      "inTheBox": null,
+      "releaseDate": "2021-08-01"
+    }
+  },
+  {
+    "brand": "ECOVACS",
+    "model": "Ecovacs Deebot T10 Plus",
+    "bests": false,
+    "mapping": true,
+    "mappingSensorType": "LDS",
+    "highPrecisionMap": true,
+    "frontCamera": true,
+    "rechargeResume": true,
+    "autoDockAndRecharge": true,
+    "noiseLevel": "66",
+    "display": false,
+    "sideBrushes": "2",
+    "voicePrompts": true,
+    "cleaningFeatures": {
+      "suctionPower": "3000",
+      "cleaningArea": "290",
+      "dustbinCapacity": "400",
+      "disposableDustBagCapacity": "3.2",
+      "autoDirtDisposal": true,
+      "barrierCrossHeight": "20",
+      "hepaFilter": true,
+      "washableFilter": true
+    },
+    "moppingFeatures": {
+      "wetMopping": true,
+      "electricWaterFlowControl": true,
+      "waterTankCapacity": "240",
+      "vibratingMoppingPad": true,
+      "autoMopLifting": false,
+      "autoWaterTankRefilling": false,
+      "autoMopWashing": false
+    },
+    "battery": {
+      "batteryCapacity": "5200",
+      "batteryLife": "195",
+      "chargingTime": "390",
+      "ratedPower": "45"
+    },
+    "control": {
+      "scheduling": true,
+      "ir_Rf_RemoteControl": false,
+      "wifiSmartphoneApp": true,
+      "wifiFrequencyBand": "2.4",
+      "amazonAlexaSupport": true,
+      "googleAssistantSupport": true,
+      "magneticVirtualWalls": null
+    },
+    "appFeatures": {
+      "realTimeTracking": true,
+      "digitalBlockedAreas": true,
+      "zonedCleaning": true,
+      "multiFloorMaps": true,
+      "manualMovementControl": true,
+      "selectedRoomCleaning": true,
+      "noMopZones": true
+    },
+    "sensor": {
+      "carpetBoost": true,
+      "cliffSensor": true,
+      "dirtSensor": false,
+      "fullDustbinSensor": false
+    },
+    "otherSpecifications": {
+      "weight": null,
+      "width": "35.3",
+      "height": "10.3",
+      "inTheBox": null,
+      "releaseDate": "2022-01-01"
+    }
+  }
+]

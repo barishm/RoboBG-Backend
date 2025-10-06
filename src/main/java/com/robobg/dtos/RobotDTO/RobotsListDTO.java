@@ -13,5 +13,6 @@ public class RobotsListDTO {
     private String model;
     private String image;
     private Integer qnaCount;
+    private Boolean bests;
     private List<PurchaseLinkDTO> purchaseLinks;
 }

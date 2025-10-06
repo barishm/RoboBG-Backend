@@ -2,6 +2,7 @@ package com.robobg.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.robobg.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.Role;
 import com.robobg.entity.User;
 import com.robobg.repository.RobotRepository;
@@ -12,6 +13,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Component
