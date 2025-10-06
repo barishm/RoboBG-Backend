@@ -20,22 +20,6 @@ public class ConsumableController {
         this.consumableService = consumableService;
     }
 
-
-//    @DeleteMapping("/{id}")
-//    public void deleteConsumable(@PathVariable Long id) {
-//        consumableService.deleteConsumable(id);
-//    }
-//
-//    @PostMapping
-//    public void createConsumable(@RequestBody CreateConsumableDTO createConsumableDTO){
-//        consumableService.createConsumableService(createConsumableDTO);
-//    }
-//
-//    @PutMapping
-//    public void updateConsumable(@RequestBody CreateConsumableDTO updateConsumableDTO) {
-//        consumableService.updateConsumable(updateConsumableDTO);
-//    }
-
     @GetMapping
     public List<ConsumableListDTO> getAllConsumables() {
         return consumableService.getAllConsumables();

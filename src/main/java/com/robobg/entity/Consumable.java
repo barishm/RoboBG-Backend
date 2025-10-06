@@ -41,7 +41,7 @@ public class Consumable {
     @ElementCollection
     @CollectionTable(name = "consumable_images", joinColumns = @JoinColumn(name = "consumable_id"))
     @Column(name = "image_path")
-    @OrderColumn(name = "image_order")  // <-- This is what ensures order!
+    @OrderColumn(name = "image_order")
     private List<String> images = new ArrayList<>();
 
 }
