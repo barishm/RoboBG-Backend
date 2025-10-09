@@ -14,6 +14,7 @@ import com.robobg.service.MostComparedService;
 import com.robobg.service.RobotService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,8 +39,11 @@ public class RobotServiceImpl implements RobotService {
     private final ModelMapper modelMapper;
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
-    private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images";
-    private static final String IMAGE_BASE_URL = "https://api.robobg.com/images/";
+    @Value("${static.files.path}")
+    private String staticFilesPath;
+    @Value("${static.files.request}")
+    private String staticFilesRequest;
+
 
     @Autowired
     public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
@@ -50,20 +54,6 @@ public class RobotServiceImpl implements RobotService {
         this.availableBrandsService = availableBrandsService;
     }
 
-    @Override
-    public List<RobotsListDTO> findAllBests() {
-        return robotRepository.findAllBests().stream()
-                .filter(robot -> Boolean.TRUE.equals(robot.getBests()))
-                .limit(9)
-                .map(robot -> {
-                    RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
-                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
-                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
-                    }
-                    return dto;
-                })
-                .collect(Collectors.toList());
-    }
 
     @Override
     public RobotResponse getAllModels() {
@@ -72,6 +62,13 @@ public class RobotServiceImpl implements RobotService {
                 .map(robot -> modelMapper.map(robot, RobotModelDTO.class))
                 .collect(Collectors.toList()));
         return robotResponse;
+    }
+
+    private String buildFullImageUrl(String image) {
+        if (image == null || image.startsWith("http")) {
+            return image;
+        }
+        return staticFilesRequest + "/" + image;
     }
 
 
@@ -136,7 +133,7 @@ public class RobotServiceImpl implements RobotService {
 
             // Delete image from local file system
             if (imageFileName != null) {
-                Path imagePath = Paths.get(SAVE_IMAGE_PATH, imageFileName);
+                Path imagePath = Paths.get(staticFilesPath, imageFileName);
                 try {
                     Files.deleteIfExists(imagePath);
                 } catch (IOException e) {
@@ -168,7 +165,7 @@ public class RobotServiceImpl implements RobotService {
 
         // Delete old image if exists
         if (robot.getImage() != null) {
-            Path oldImagePath = Paths.get(SAVE_IMAGE_PATH, robot.getImage());
+            Path oldImagePath = Paths.get(staticFilesPath, robot.getImage());
             System.out.println("Deleting old image: " + oldImagePath);
             Files.deleteIfExists(oldImagePath);
         }
@@ -185,7 +182,7 @@ public class RobotServiceImpl implements RobotService {
         }
 
         String fileName = "Robot%s_%s.%s".formatted(robotId, timestamp, extension);
-        Path imagePath = Paths.get(SAVE_IMAGE_PATH, fileName);
+        Path imagePath = Paths.get(staticFilesPath, fileName);
 
         System.out.println("Saving image to: " + imagePath);
         Files.createDirectories(imagePath.getParent());
@@ -232,9 +229,7 @@ public class RobotServiceImpl implements RobotService {
         return robotRepository.findById(id)
                 .map(robot -> {
                     RobotDTO dto = modelMapper.map(robot, RobotDTO.class);
-                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
-                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
-                    }
+                    dto.setImage(buildFullImageUrl(dto.getImage()));
                     return dto;
                 });
     }
@@ -255,9 +250,7 @@ public class RobotServiceImpl implements RobotService {
         return allRobots.stream()
                 .map(robot -> {
                     RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
-                    if (dto.getImage() != null && !dto.getImage().startsWith("http")) {
-                        dto.setImage(IMAGE_BASE_URL + dto.getImage());
-                    }
+                    dto.setImage(buildFullImageUrl(dto.getImage()));
                     return dto;
                 })
                 .toList();

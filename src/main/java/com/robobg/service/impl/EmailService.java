@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    @Value("${application.frontend.reset-password-url}")
-    private String resetPasswordUrl;
+    @Value("${domain}")
+    private String domain;
     @Value("${spring.mail.username}")
     private String fromEmail;
     @Autowired
@@ -29,7 +29,7 @@ public class EmailService {
     @Async
     public void sendPasswordResetEmail(String recipientEmail, String token) {
         try {
-            String resetLink = resetPasswordUrl + "?token=" + token;
+            String resetLink = "https://" + domain + "/password-reset" + "?token=" + token;
 
             String htmlContent = buildResetEmailHtml(resetLink);
 

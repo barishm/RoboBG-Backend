@@ -47,10 +47,6 @@ public class RobotController {
         return robotService.getAllRobots();
     }
 
-    @GetMapping("/bests")
-    public List<RobotsListDTO> getBestRobots(){
-        return robotService.findAllBests();
-    }
 
 
     @GetMapping("/{robotId}/questions")

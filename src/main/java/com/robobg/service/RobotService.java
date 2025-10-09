@@ -22,7 +22,6 @@ public interface RobotService {
     void saveRobot(CreateRobotDTO robot) throws RobotAlreadyExistsException;
     void updateRobot(CreateRobotDTO robot);
     void deleteRobotById(Long id) throws ChangeSetPersister.NotFoundException;
-    List<RobotsListDTO> findAllBests();
 
     RobotResponse getAllModels();
 

@@ -1,14 +1,17 @@
-# Use OpenJDK base image
-FROM openjdk:17-jdk-slim
+# syntax=docker/dockerfile:1.7
 
-# Set working directory
+# ---- build stage (uses Maven + JDK 17) ----
+FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY pom.xml .
+# cache maven repo between builds (requires BuildKit)
+RUN --mount=type=cache,target=/root/.m2 mvn -q -DskipTests dependency:go-offline
+COPY src ./src
+RUN --mount=type=cache,target=/root/.m2 mvn -q -DskipTests package
 
-# Copy the built JAR file (make sure you build the JAR first)
-COPY target/robobg-app.jar robobg-app.jar
-
-# Expose the port your Spring Boot app is running on (default is 8080)
-EXPOSE 5000
-
-# Run the JAR file
-ENTRYPOINT ["java", "-jar", "robobg-app.jar"]
+# ---- runtime stage (small JRE image) ----
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/app/app.jar"]

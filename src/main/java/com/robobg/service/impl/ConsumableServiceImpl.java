@@ -12,6 +12,7 @@ import com.robobg.service.ConsumableService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,10 +29,14 @@ import java.util.stream.Collectors;
 @Service
 public class ConsumableServiceImpl implements ConsumableService {
 
-    private static final String SAVE_IMAGE_PATH = "/home/ubuntu/robobg/images/consumables";
+    @Value("${static.files.path}")
+    private String STATIC_FILES_PATH;
+    @Value("${static.files.request}")
+    private String staticFilesRequest;
     private final ConsumableRepository consumableRepository;
     private final RobotRepository robotRepository;
     private final ModelMapper modelMapper;
+
     @Autowired
     public ConsumableServiceImpl(ConsumableRepository consumableRepository, RobotRepository robotRepository, ModelMapper modelMapper) {
         this.consumableRepository = consumableRepository;
@@ -39,11 +44,27 @@ public class ConsumableServiceImpl implements ConsumableService {
         this.modelMapper = modelMapper;
     }
 
+    private String buildFullImageUrl(String image) {
+        if (image == null || image.startsWith("http")) {
+            return image;
+        }
+        return staticFilesRequest + "/" + image;
+    }
+
 
     @Override
     public List<ConsumableListDTO> getAllConsumables() {
         return consumableRepository.findAll().stream()
-                .map(consumable -> modelMapper.map(consumable, ConsumableListDTO.class))
+                .map(consumable -> {
+                    ConsumableListDTO dto = modelMapper.map(consumable, ConsumableListDTO.class);
+
+                    List<String> updatedImages = dto.getImages().stream()
+                            .map(this::buildFullImageUrl)
+                            .toList();
+                    dto.setImages(updatedImages);
+
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -99,7 +120,7 @@ public class ConsumableServiceImpl implements ConsumableService {
             Consumable consumable = consumableOptional.get();
 
             for (String imageName : consumable.getImages()) {
-                Path imagePath = Paths.get(SAVE_IMAGE_PATH, imageName);
+                Path imagePath = Paths.get(STATIC_FILES_PATH, imageName);
                 try {
                     Files.deleteIfExists(imagePath);
                 } catch (IOException e) {
@@ -116,7 +137,16 @@ public class ConsumableServiceImpl implements ConsumableService {
     @Override
     public Optional<ConsumableDetailsDTO> getConsumableById(Long id) {
         return consumableRepository.findById(id)
-                .map(consumable -> modelMapper.map(consumable, ConsumableDetailsDTO.class));
+                .map(consumable -> {
+                    ConsumableDetailsDTO dto = modelMapper.map(consumable, ConsumableDetailsDTO.class);
+
+                    List<String> updatedImages = dto.getImages().stream()
+                            .map(this::buildFullImageUrl)
+                            .toList();
+                    dto.setImages(updatedImages);
+
+                    return dto;
+                });
     }
 
 
@@ -130,30 +160,34 @@ public class ConsumableServiceImpl implements ConsumableService {
         Consumable consumable = consumableOptional.get();
 
         for (String imageName : consumable.getImages()) {
-            Path oldImagePath = Paths.get(SAVE_IMAGE_PATH, imageName);
+            Path oldImagePath = Paths.get(STATIC_FILES_PATH, imageName);
             Files.deleteIfExists(oldImagePath);
         }
 
         consumable.getImages().clear();
-        consumableRepository.save(consumable);
 
         List<String> newImageNames = new ArrayList<>();
 
-        for (MultipartFile file : files) {
-            String extension = FileUtils.getExtensionOfFile(file);
-            if (extension.isEmpty()) {
-                throw new IllegalArgumentException("Unsupported file type.");
+        System.out.println("STATIC_FILES_PATH = " + STATIC_FILES_PATH);
+        try {
+            for (MultipartFile file : files) {
+                String extension = FileUtils.getExtensionOfFile(file);
+                if (extension.isEmpty()) {
+                    throw new IllegalArgumentException("Unsupported file type.");
+                }
+
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+                String uniqueId = UUID.randomUUID().toString();
+                String fileName = String.format("Consumable%s_%s_%s.%s", consumableId, timestamp, uniqueId, extension);
+
+                Path imagePath = Paths.get(STATIC_FILES_PATH, fileName);
+                Files.createDirectories(imagePath.getParent());
+                Files.write(imagePath, file.getBytes());
+
+                newImageNames.add(fileName);
             }
-
-            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-            String uniqueId = UUID.randomUUID().toString();
-            String fileName = String.format("Consumable%s_%s_%s.%s", consumableId, timestamp, uniqueId, extension);
-
-            Path imagePath = Paths.get(SAVE_IMAGE_PATH, fileName);
-            Files.createDirectories(imagePath.getParent());
-            Files.write(imagePath, file.getBytes());
-
-            newImageNames.add(fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         consumable.setImages(newImageNames);
