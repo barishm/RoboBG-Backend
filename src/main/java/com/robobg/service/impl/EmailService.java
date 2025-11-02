@@ -74,6 +74,21 @@ public class EmailService {
         mailSender.send(message);
     }
 
+    @Async
+    public void sendPlainText(String[] to, String subject, String body) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new EmailSendingException("Failed to send mail", e);
+        }
+    }
+
     private String buildResetEmailHtml(String resetLink) {
         return "<!DOCTYPE html>" +
                 "<html style='font-family: Arial, sans-serif;'>" +

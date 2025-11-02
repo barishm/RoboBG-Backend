@@ -24,6 +24,7 @@ public class ScheduledBackup {
     private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
 
     private final S3Service s3;
+    private final EmailService emailService;
 
     @Value("${static.files.path}")
     private String filesDir;
@@ -45,7 +46,10 @@ public class ScheduledBackup {
     @Value("${spring.datasource.password:}")
     private String dbPassword;
 
-    public ScheduledBackup(S3Service s3) { this.s3 = s3; }
+    public ScheduledBackup(S3Service s3, EmailService emailService) {
+        this.s3 = s3;
+        this.emailService = emailService;
+    }
 
     @Scheduled(fixedRate = 60000 * 60 * 24)
     public void archiveAndUpload() {
@@ -81,6 +85,22 @@ public class ScheduledBackup {
             if (removedLocal > 0) {
                 log.info("Pruned {} old local dumps under {}", removedLocal, dumpDir);
             }
+
+            var objects = s3.list(bucket, prefix);   // newest-first
+            int available = objects.size();
+            String latestKey = (available > 0) ? objects.get(0).key() : "(none)";
+
+            emailService.sendPlainText(
+                    new String[]{"barishm1337@gmail.com", "eshk088@gmail.com"},
+                    "[RoboBG] Backup OK " + ts,
+                    """
+                    Backup completed.
+                
+                    Latest backup:   s3://%s/%s
+                    Available total: %d
+                    """.formatted(bucket, latestKey, available)
+            );
+            //todo send information about taken and available backups on s3 bucket
         } catch (Exception e) {
             log.error("Backup failed", e);
         } finally {

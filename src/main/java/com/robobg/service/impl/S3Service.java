@@ -74,4 +74,31 @@ public class S3Service {
 
         return deleted;
     }
+
+    public List<S3Object> list(String bucket, String prefix) {
+        List<S3Object> items = new ArrayList<>();
+
+        ListObjectsV2Request req = ListObjectsV2Request.builder()
+                .bucket(bucket)
+                .prefix(prefix == null ? "" : prefix)
+                .build();
+
+        ListObjectsV2Iterable pages = s3Client.listObjectsV2Paginator(req);
+
+        for (ListObjectsV2Response page : pages) {
+            for (S3Object o : page.contents()) {
+                // skip directory markers
+                if (o.key() != null && !o.key().endsWith("/")) {
+                    items.add(o);
+                }
+            }
+        }
+
+        // newest first (by Last-Modified), tie-breaker by key
+        items.sort(Comparator
+                .comparing(S3Object::lastModified).reversed()
+                .thenComparing(S3Object::key).reversed());
+
+        return items;
+    }
 }
