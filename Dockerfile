@@ -9,6 +9,11 @@ RUN --mount=type=cache,target=/root/.m2 mvn -q -DskipTests dependency:go-offline
 COPY src ./src
 RUN --mount=type=cache,target=/root/.m2 mvn -q -DskipTests package
 
+# add pg_dump
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends postgresql-client \
+ && rm -rf /var/lib/apt/lists/*
+
 # ---- runtime stage (small JRE image) ----
 FROM eclipse-temurin:17-jre
 WORKDIR /app
