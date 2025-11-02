@@ -31,8 +31,8 @@ public class ConsumableServiceImpl implements ConsumableService {
 
     @Value("${static.files.path}")
     private String STATIC_FILES_PATH;
-    @Value("${static.files.request}")
-    private String staticFilesRequest;
+    @Value("${domain}")
+    private String domain;
     private final ConsumableRepository consumableRepository;
     private final RobotRepository robotRepository;
     private final ModelMapper modelMapper;
@@ -48,7 +48,7 @@ public class ConsumableServiceImpl implements ConsumableService {
         if (image == null || image.startsWith("http")) {
             return image;
         }
-        return staticFilesRequest + "/" + image;
+        return "https://api."+domain+"/files" + "/" + image;
     }
 
 

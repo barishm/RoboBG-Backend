@@ -41,8 +41,8 @@ public class RobotServiceImpl implements RobotService {
     private final AvailableBrandsServiceImpl availableBrandsService;
     @Value("${static.files.path}")
     private String staticFilesPath;
-    @Value("${static.files.request}")
-    private String staticFilesRequest;
+    @Value("${domain}")
+    private String domain;
 
 
     @Autowired
@@ -68,7 +68,8 @@ public class RobotServiceImpl implements RobotService {
         if (image == null || image.startsWith("http")) {
             return image;
         }
-        return staticFilesRequest + "/" + image;
+        return "https://api."+domain+"/files" + "/" + image;
+
     }
 
 

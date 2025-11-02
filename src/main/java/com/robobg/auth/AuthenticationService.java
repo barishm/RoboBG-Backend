@@ -59,7 +59,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        var user = userRepository.findByUsernameIgnoreCase(request.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         return AuthenticationResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
