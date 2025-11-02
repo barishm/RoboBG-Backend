@@ -77,7 +77,7 @@ public class ScheduledBackup {
                 log.info("Pruned {} old backups under s3://{}/{}", removed, bucket, prefix);
             }
 
-            int removedLocal = deleteAllButNewest(dumpDir, p -> p.getFileName().toString().endsWith(".sql"), 3);
+            int removedLocal = deleteAllButNewest(dumpDir, p -> p.getFileName().toString().endsWith(".dump"), 3);
             if (removedLocal > 0) {
                 log.info("Pruned {} old local dumps under {}", removedLocal, dumpDir);
             }
