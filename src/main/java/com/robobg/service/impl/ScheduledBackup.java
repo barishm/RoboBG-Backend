@@ -47,7 +47,7 @@ public class ScheduledBackup {
 
     public ScheduledBackup(S3Service s3) { this.s3 = s3; }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000 * 60 * 24)
     public void archiveAndUpload() {
         String ts = LocalDateTime.now().format(TS);
         String filename = ts + ".tar.gz";
