@@ -8,10 +8,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Stream;
 
 @Component
 public class ScheduledBackup {
@@ -34,7 +39,7 @@ public class ScheduledBackup {
 
     // --- DB connection (usually from Spring properties) ---
     @Value("${spring.datasource.url}")
-    private String jdbcUrl; // e.g. jdbc:postgresql://localhost:5432/mydb
+    private String jdbcUrl;
     @Value("${spring.datasource.username}")
     private String dbUser;
     @Value("${spring.datasource.password:}")
@@ -42,15 +47,14 @@ public class ScheduledBackup {
 
     public ScheduledBackup(S3Service s3) { this.s3 = s3; }
 
-    // Run once per day at 02:30 (Windows or Linux). Adjust as needed.
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 60000)
     public void archiveAndUpload() {
         String ts = LocalDateTime.now().format(TS);
         String filename = ts + ".tar.gz";
 
         Path imagesDir = Path.of(filesDir);
         Path dumpDir = Path.of(databaseBackupPath);
-        Path dumpFile = dumpDir.resolve("db-" + ts + ".sql"); // plain SQL; outer .gz will compress it
+        Path dumpFile = dumpDir.resolve("db-" + ts + ".dump"); // plain SQL; outer .gz will compress it
         Path tmp = Path.of(System.getProperty("java.io.tmpdir")).resolve(filename);
         String key = prefix + filename;
 
@@ -72,6 +76,11 @@ public class ScheduledBackup {
             if (removed > 0) {
                 log.info("Pruned {} old backups under s3://{}/{}", removed, bucket, prefix);
             }
+
+            int removedLocal = deleteAllButNewest(dumpDir, p -> p.getFileName().toString().endsWith(".sql"), 3);
+            if (removedLocal > 0) {
+                log.info("Pruned {} old local dumps under {}", removedLocal, dumpDir);
+            }
         } catch (Exception e) {
             log.error("Backup failed", e);
         } finally {
@@ -79,8 +88,27 @@ public class ScheduledBackup {
         }
     }
 
+    private static int deleteAllButNewest(Path dir, java.util.function.Predicate<Path> filter, int keep) throws IOException {
+        if (!Files.isDirectory(dir)) return 0;
 
+        List<Path> files;
+        try (Stream<Path> s = Files.list(dir)) {
+            files = s.filter(Files::isRegularFile)
+                    .filter(filter)
+                    .sorted(Comparator
+                            .comparing((Path p) -> {
+                                try { return Files.getLastModifiedTime(p); } catch (IOException e) { return FileTime.fromMillis(0); }
+                            })
+                            .reversed()
+                            .thenComparing((Path p) -> p.getFileName().toString(), Comparator.reverseOrder()))
+                    .toList();
+        }
 
-
+        int removed = 0;
+        for (int i = keep; i < files.size(); i++) {
+            try { Files.deleteIfExists(files.get(i)); removed++; } catch (Exception ignore) {}
+        }
+        return removed;
+    }
 
 }

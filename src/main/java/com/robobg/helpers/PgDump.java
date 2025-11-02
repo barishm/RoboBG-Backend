@@ -26,7 +26,7 @@ public class PgDump {
         cmd.add("-p"); cmd.add(Integer.toString(c.port));
         cmd.add("-U"); cmd.add(user);
         cmd.add("-d"); cmd.add(c.db);
-        cmd.add("-F"); cmd.add("p");    // plain
+        cmd.add("-F"); cmd.add("c");    // plain
         cmd.add("-f"); cmd.add(outFile.toAbsolutePath().toString());
 
         ProcessBuilder pb = new ProcessBuilder(cmd);
