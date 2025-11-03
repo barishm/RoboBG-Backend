@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.robobg.dtos.RobotDTO.CreateRobotDTO;
 import com.robobg.entity.Role;
 import com.robobg.entity.User;
+import com.robobg.exceptions.RobotAlreadyExistsException;
 import com.robobg.repository.RobotRepository;
 import com.robobg.repository.UserRepository;
 import com.robobg.service.impl.RobotServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +69,10 @@ public class DatabaseSeeder implements CommandLineRunner {
             }
         }
 
+//        uploadRobotsFromJson();
+    }
+
+    private void uploadRobotsFromJson() throws IOException, RobotAlreadyExistsException {
         InputStream inputStream = getClass().getResourceAsStream("/robots.json");
         CreateRobotDTO[] data = objectMapper.readValue(inputStream, CreateRobotDTO[].class);
 
