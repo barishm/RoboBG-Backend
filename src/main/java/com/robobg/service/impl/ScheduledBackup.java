@@ -51,7 +51,7 @@ public class ScheduledBackup {
         this.emailService = emailService;
     }
 
-    @Scheduled(fixedRate = 60000 * 60 * 24)
+    @Scheduled(cron = "0 0 6 ? * 2,4,6", zone = "Europe/Sofia")
     public void archiveAndUpload() {
         String ts = LocalDateTime.now().format(TS);
         String filename = ts + ".tar.gz";
@@ -76,7 +76,7 @@ public class ScheduledBackup {
             log.info("Uploaded to s3://{}/{}", bucket, key);
 
             // 4) Keep only the 3 newest backups
-            int removed = s3.deleteAllButNewest(bucket, prefix, 3);
+            int removed = s3.deleteAllButNewest(bucket, prefix, 9);
             if (removed > 0) {
                 log.info("Pruned {} old backups under s3://{}/{}", removed, bucket, prefix);
             }
