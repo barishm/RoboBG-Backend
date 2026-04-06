@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class ConsumableDetailsDTO {
-
+    private Long id;
     private String title;
     private String description;
     private String price;

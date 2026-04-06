@@ -34,7 +34,7 @@ public class Robot {
     private String image;
 
     @Column(name = "bests")
-    private Boolean bests;
+    private Integer bests;
 
     @Column
     private Boolean mapping;
