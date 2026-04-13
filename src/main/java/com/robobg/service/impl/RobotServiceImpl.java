@@ -22,6 +22,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +31,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,19 +42,27 @@ public class RobotServiceImpl implements RobotService {
     private final ModelMapper modelMapper;
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
-    @Value("${static.files.path}")
-    private String staticFilesPath;
+    private final ImageService imageService;
+    @Value("${app.files.path}")
+    private String appFilesPath;
     @Value("${domain}")
     private String domain;
+    @Value("${web.protocol}")
+    private String webProtocol;
 
 
     @Autowired
-    public RobotServiceImpl(RobotRepository robotRepository, ModelMapper modelMapper, MostComparedService mostComparedService, AvailableBrandsServiceImpl availableBrandsService) {
+    public RobotServiceImpl(RobotRepository robotRepository,
+                            ModelMapper modelMapper,
+                            MostComparedService mostComparedService,
+                            AvailableBrandsServiceImpl availableBrandsService,
+                            ImageService imageService) {
         super();
         this.robotRepository = robotRepository;
         this.modelMapper = modelMapper;
         this.mostComparedService = mostComparedService;
         this.availableBrandsService = availableBrandsService;
+        this.imageService = imageService;
     }
 
 
@@ -68,7 +79,7 @@ public class RobotServiceImpl implements RobotService {
         if (image == null || image.startsWith("http")) {
             return image;
         }
-        return "https://api."+domain+"/files" + "/" + image;
+        return webProtocol+"://api."+domain+"/files" + "/" + image;
 
     }
 
@@ -134,7 +145,7 @@ public class RobotServiceImpl implements RobotService {
 
             // Delete image from local file system
             if (imageFileName != null) {
-                Path imagePath = Paths.get(staticFilesPath, imageFileName);
+                Path imagePath = Paths.get(appFilesPath, imageFileName);
                 try {
                     Files.deleteIfExists(imagePath);
                 } catch (IOException e) {
@@ -154,66 +165,29 @@ public class RobotServiceImpl implements RobotService {
 
     @Override
     public void uploadRobotImage(Long robotId, MultipartFile file) throws IOException {
+
         System.out.println("Starting image upload for robot ID: " + robotId);
 
-        Optional<Robot> robotOptional = robotRepository.findById(robotId);
-        if (robotOptional.isEmpty()) {
-            System.out.println("Robot not found: " + robotId);
-            throw new IllegalArgumentException("Robot with ID " + robotId + " does not exist.");
-        }
-
-        Robot robot = robotOptional.get();
+        Robot robot = robotRepository.findById(robotId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Robot with ID " + robotId + " does not exist."
+                ));
 
         // Delete old image if exists
         if (robot.getImage() != null) {
-            Path oldImagePath = Paths.get(staticFilesPath, robot.getImage());
-            System.out.println("Deleting old image: " + oldImagePath);
+            Path oldImagePath = Paths.get("app/files", robot.getImage());
             Files.deleteIfExists(oldImagePath);
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        String timestamp = now.format(formatter);
+        // Delegate ALL image processing to ImageService
+        String newFileName = imageService.storeRobotImage(robotId, file);
 
-        String extension = getExtensionOfFile(file);
-        System.out.println("File extension: " + extension);
-        if (extension.isEmpty()) {
-            System.out.println("Unsupported file type.");
-            throw new IllegalArgumentException("Unsupported file type.");
-        }
-
-        String fileName = "Robot%s_%s.%s".formatted(robotId, timestamp, extension);
-        Path imagePath = Paths.get(staticFilesPath, fileName);
-
-        System.out.println("Saving image to: " + imagePath);
-        Files.createDirectories(imagePath.getParent());
-        Files.write(imagePath, file.getBytes());
-
-        robot.setImage(fileName);
+        robot.setImage(newFileName);
         robotRepository.save(robot);
 
-        System.out.println("Image uploaded and saved successfully for robot ID: " + robotId);
+        System.out.println("Image uploaded successfully for robot ID: " + robotId);
     }
 
-
-
-    private String getExtensionOfFile(MultipartFile file) {
-        String fileName = file.getOriginalFilename();
-        if (fileName == null || !fileName.contains(".")) {
-            return "";
-        }
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
-    private String determineContentType(String extension) {
-        return switch (extension.toLowerCase()) {
-            case "png" -> "image/png";
-            case "jpg" -> "image/jpg";
-            case "jpeg" -> "image/jpeg";
-            case "avif" -> "image/avif";
-            case "webp" -> "image/webp";
-            default -> ""; // Unsupported type
-        };
-    }
 
     @Override
     public RobotResponse getRobots(HashSet<String> fields, int page, String model, List<String> brands,Integer startYear,Integer endYear,Integer minDustbinCapacity,Integer maxDustbinCapacity,Integer minSuctionPower,Integer maxSuctionPower) {

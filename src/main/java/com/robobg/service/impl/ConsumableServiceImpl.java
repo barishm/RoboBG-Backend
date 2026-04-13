@@ -21,34 +21,39 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ConsumableServiceImpl implements ConsumableService {
 
-    @Value("${static.files.path}")
-    private String STATIC_FILES_PATH;
+    @Value("${app.files.path}")
+    private String appFilesPath;
     @Value("${domain}")
     private String domain;
+    @Value("${web.protocol}")
+    private String webProtocol;
     private final ConsumableRepository consumableRepository;
     private final RobotRepository robotRepository;
     private final ModelMapper modelMapper;
+    private  final ImageService imageService;
 
     @Autowired
-    public ConsumableServiceImpl(ConsumableRepository consumableRepository, RobotRepository robotRepository, ModelMapper modelMapper) {
+    public ConsumableServiceImpl(ConsumableRepository consumableRepository,
+                                 RobotRepository robotRepository,
+                                 ModelMapper modelMapper,
+                                 ImageService imageService) {
         this.consumableRepository = consumableRepository;
         this.robotRepository = robotRepository;
         this.modelMapper = modelMapper;
+        this.imageService = imageService;
     }
 
     private String buildFullImageUrl(String image) {
         if (image == null || image.startsWith("http")) {
             return image;
         }
-        return "https://api."+domain+"/files" + "/" + image;
+        return webProtocol+"://api."+domain+"/files" + "/" + image;
     }
 
 
@@ -120,7 +125,7 @@ public class ConsumableServiceImpl implements ConsumableService {
             Consumable consumable = consumableOptional.get();
 
             for (String imageName : consumable.getImages()) {
-                Path imagePath = Paths.get(STATIC_FILES_PATH, imageName);
+                Path imagePath = Paths.get(appFilesPath, imageName);
                 try {
                     Files.deleteIfExists(imagePath);
                 } catch (IOException e) {
@@ -152,45 +157,25 @@ public class ConsumableServiceImpl implements ConsumableService {
 
     @Override
     public void uploadConsumableImage(Long consumableId, List<MultipartFile> files) throws IOException {
-        Optional<Consumable> consumableOptional = consumableRepository.findById(consumableId);
-        if (consumableOptional.isEmpty()) {
-            throw new IllegalArgumentException("Consumable with ID " + consumableId + " does not exist.");
-        }
 
-        Consumable consumable = consumableOptional.get();
+        Consumable consumable = consumableRepository.findById(consumableId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Consumable with ID " + consumableId + " does not exist."
+                ));
 
-        for (String imageName : consumable.getImages()) {
-            Path oldImagePath = Paths.get(STATIC_FILES_PATH, imageName);
-            Files.deleteIfExists(oldImagePath);
-        }
-
-        consumable.getImages().clear();
-
-        List<String> newImageNames = new ArrayList<>();
-
-        System.out.println("STATIC_FILES_PATH = " + STATIC_FILES_PATH);
-        try {
-            for (MultipartFile file : files) {
-                String extension = FileUtils.getExtensionOfFile(file);
-                if (extension.isEmpty()) {
-                    throw new IllegalArgumentException("Unsupported file type.");
-                }
-
-                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-                String uniqueId = UUID.randomUUID().toString();
-                String fileName = String.format("Consumable%s_%s_%s.%s", consumableId, timestamp, uniqueId, extension);
-
-                Path imagePath = Paths.get(STATIC_FILES_PATH, fileName);
-                Files.createDirectories(imagePath.getParent());
-                Files.write(imagePath, file.getBytes());
-
-                newImageNames.add(fileName);
+        // 1. Delete old images FIRST (after we know entity exists)
+        if (consumable.getImages() != null) {
+            for (String imageName : consumable.getImages()) {
+                Path oldImagePath = Paths.get("app/files", imageName);
+                Files.deleteIfExists(oldImagePath);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
-        consumable.setImages(newImageNames);
+        // 2. Save new images via ImageService
+        List<String> newImages = imageService.storeConsumablesImages(consumableId, files);
+
+        // 3. Update DB
+        consumable.setImages(newImages);
         consumableRepository.save(consumable);
     }
 }
