@@ -13,16 +13,16 @@ public class RobotDTO {
     private String model;
     private String image;
     private Integer bests;
-    private Boolean mapping;
+    private String mapping;
     private String mappingSensorType;
-    private Boolean highPrecisionMap;
-    private Boolean frontCamera;
-    private Boolean rechargeResume;
-    private Boolean autoDockAndRecharge;
+    private String highPrecisionMap;
+    private String frontCamera;
+    private String rechargeResume;
+    private String autoDockAndRecharge;
     private String noiseLevel;
-    private Boolean display;
+    private String display;
     private String sideBrushes;
-    private Boolean voicePrompts;
+    private String voicePrompts;
     private CleaningFeaturesDTO cleaningFeatures;
     private MoppingFeaturesDTO moppingFeatures;
     private BatteryDTO battery;
@@ -31,7 +31,6 @@ public class RobotDTO {
     private SensorDTO sensor;
     private OtherSpecificationsDTO otherSpecifications;
     private List<PurchaseLinkDTO> purchaseLinks;
-    private Integer qnaCount;
     private List<ConsumableTitleDTO> consumables;
 
 }

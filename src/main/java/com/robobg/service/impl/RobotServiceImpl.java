@@ -8,6 +8,7 @@ import com.robobg.entity.Robot;
 import com.robobg.entity.oldDtos.RobotModelImageLinksDTO;
 import com.robobg.entity.oldDtos.RobotResponse;
 import com.robobg.exceptions.RobotAlreadyExistsException;
+import com.robobg.repository.QuestionRepository;
 import com.robobg.repository.RobotRepository;
 import com.robobg.repository.RobotSpecifications;
 import com.robobg.service.MostComparedService;
@@ -39,6 +40,7 @@ public class RobotServiceImpl implements RobotService {
 
 
     private final RobotRepository robotRepository;
+    private final QuestionRepository questionRepository;
     private final ModelMapper modelMapper;
     private final MostComparedService mostComparedService;
     private final AvailableBrandsServiceImpl availableBrandsService;
@@ -56,13 +58,15 @@ public class RobotServiceImpl implements RobotService {
                             ModelMapper modelMapper,
                             MostComparedService mostComparedService,
                             AvailableBrandsServiceImpl availableBrandsService,
-                            ImageService imageService) {
+                            ImageService imageService,
+                            QuestionRepository questionRepository) {
         super();
         this.robotRepository = robotRepository;
         this.modelMapper = modelMapper;
         this.mostComparedService = mostComparedService;
         this.availableBrandsService = availableBrandsService;
         this.imageService = imageService;
+        this.questionRepository = questionRepository;
     }
 
 
@@ -209,23 +213,18 @@ public class RobotServiceImpl implements RobotService {
                 });
     }
 
-    public void incrementQnaCount(RobotDTO robotDTO) {
-        Integer currentQnaCount = robotDTO.getQnaCount();
-        if (currentQnaCount == null) {
-            currentQnaCount = 0;
-        }
-        robotDTO.setQnaCount(currentQnaCount + 1);
-        Robot robot = modelMapper.map(robotDTO, Robot.class);
-        robotRepository.save(robot);
-    }
-
     @Override
     public List<RobotsListDTO> getAllRobots() {
         List<Robot> allRobots = robotRepository.findAll();
+
         return allRobots.stream()
                 .map(robot -> {
                     RobotsListDTO dto = modelMapper.map(robot, RobotsListDTO.class);
                     dto.setImage(buildFullImageUrl(dto.getImage()));
+
+                    long count = questionRepository.countByRobotId(robot.getId());
+                    dto.setQnaCount((int) count);
+
                     return dto;
                 })
                 .toList();

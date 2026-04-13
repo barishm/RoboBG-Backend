@@ -18,14 +18,14 @@ public class Sensor {
     private Long id;
 
     @Column(name = "carpet_boost")
-    private Boolean carpetBoost;
+    private String carpetBoost;
 
     @Column(name = "cliff_sensor")
-    private Boolean cliffSensor;
+    private String cliffSensor;
 
     @Column(name = "dirt_sensor")
-    private Boolean dirtSensor;
+    private String dirtSensor;
 
     @Column(name = "full_dustbin_sensor")
-    private Boolean fullDustbinSensor;
+    private String fullDustbinSensor;
 }

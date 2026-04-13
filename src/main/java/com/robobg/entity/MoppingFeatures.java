@@ -37,4 +37,16 @@ public class MoppingFeatures {
 
     @Column(name = "auto_mop_washing")
     private Boolean autoMopWashing;
+
+    @Column(name = "spinning_mops")
+    private String spinningMops;
+
+    @Column(name = "washing_mops_with_warm_water")
+    private String washingMopsWithWarmWater;
+
+    @Column(name = "drying_the_mops")
+    private String dryingTheMops;
+
+    @Column(name = "automatic_detergent_dosing")
+    private String automaticDetergentDosing;
 }

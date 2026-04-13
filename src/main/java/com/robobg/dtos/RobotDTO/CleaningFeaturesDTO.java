@@ -9,8 +9,8 @@ public class CleaningFeaturesDTO {
     private String cleaningArea;
     private Integer dustbinCapacity;
     private String disposableDustBagCapacity;
-    private Boolean autoDirtDisposal;
+    private String autoDirtDisposal;
     private String barrierCrossHeight;
-    private Boolean hepaFilter;
-    private Boolean washableFilter;
+    private String hepaFilter;
+    private String washableFilter;
 }

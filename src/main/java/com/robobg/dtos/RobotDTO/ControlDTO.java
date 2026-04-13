@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class ControlDTO {
     private Long id;
-    private Boolean scheduling;
-    private Boolean irRfRemoteControl;
-    private Boolean wifiSmartphoneApp;
+    private String scheduling;
+    private String irRfRemoteControl;
+    private String wifiSmartphoneApp;
     private String wifiFrequencyBand;
-    private Boolean amazonAlexaSupport;
-    private Boolean googleAssistantSupport;
-    private Boolean magneticVirtualWalls;
+    private String amazonAlexaSupport;
+    private String googleAssistantSupport;
+    private String magneticVirtualWalls;
 }

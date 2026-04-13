@@ -18,24 +18,24 @@ public class AppFeatures {
     private Long id;
 
     @Column(name = "real_time_tracking")
-    private Boolean realTimeTracking;
+    private String realTimeTracking;
 
     @Column(name = "digital_blocked_areas")
-    private Boolean digitalBlockedAreas;
+    private String digitalBlockedAreas;
 
     @Column(name = "zoned_cleaning")
-    private Boolean zonedCleaning;
+    private String zonedCleaning;
 
     @Column(name = "multi_floor_maps")
-    private Boolean multiFloorMaps;
+    private String multiFloorMaps;
 
     @Column(name = "manual_movement_control")
-    private Boolean manualMovementControl;
+    private String manualMovementControl;
 
     @Column(name = "selected_room_cleaning")
-    private Boolean selectedRoomCleaning;
+    private String selectedRoomCleaning;
 
     @Column(name = "no_mop_zones")
-    private Boolean noMopZones;
+    private String noMopZones;
 
 }

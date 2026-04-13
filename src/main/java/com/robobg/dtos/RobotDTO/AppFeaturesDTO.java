@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class AppFeaturesDTO {
     private Long id;
-    private Boolean realTimeTracking;
-    private Boolean digitalBlockedAreas;
-    private Boolean zonedCleaning;
-    private Boolean multiFloorMaps;
-    private Boolean manualMovementControl;
-    private Boolean selectedRoomCleaning;
-    private Boolean noMopZones;
+    private String realTimeTracking;
+    private String digitalBlockedAreas;
+    private String zonedCleaning;
+    private String multiFloorMaps;
+    private String manualMovementControl;
+    private String selectedRoomCleaning;
+    private String noMopZones;
 }

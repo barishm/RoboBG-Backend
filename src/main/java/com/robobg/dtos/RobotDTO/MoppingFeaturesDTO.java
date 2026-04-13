@@ -12,4 +12,8 @@ public class MoppingFeaturesDTO {
     private Boolean autoMopLifting;
     private Boolean autoWaterTankRefilling;
     private Boolean autoMopWashing;
+    private String spinningMops;
+    private String washingMopsWithWarmWater;
+    private String dryingTheMops;
+    private String automaticDetergentDosing;
 }

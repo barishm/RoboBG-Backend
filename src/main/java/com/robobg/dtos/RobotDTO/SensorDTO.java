@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class SensorDTO {
     private Long id;
-    private Boolean carpetBoost;
-    private Boolean cliffSensor;
-    private Boolean dirtSensor;
-    private Boolean fullDustbinSensor;
+    private String carpetBoost;
+    private String cliffSensor;
+    private String dirtSensor;
+    private String fullDustbinSensor;
 }

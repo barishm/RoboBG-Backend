@@ -32,15 +32,15 @@ public class CleaningFeatures {
     private String disposableDustBagCapacity;
 
     @Column(name = "auto_dirt_disposal")
-    private Boolean autoDirtDisposal;
+    private String autoDirtDisposal;
 
     @Column(name = "barrier_cross_height")
     private String barrierCrossHeight;
 
     @Column(name = "hepa_filter")
-    private Boolean hepaFilter;
+    private String hepaFilter;
 
     @Column(name = "washable_filter")
-    private Boolean washableFilter;
+    private String washableFilter;
 
 }

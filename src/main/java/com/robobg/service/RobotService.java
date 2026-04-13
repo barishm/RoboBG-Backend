@@ -34,7 +34,5 @@ public interface RobotService {
     void uploadRobotImage(Long robotId, MultipartFile file) throws IOException;
 
 
-    void incrementQnaCount(RobotDTO robotDTO);
-
     List<RobotsListDTO> getAllRobots();
 }

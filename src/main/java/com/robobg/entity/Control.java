@@ -18,24 +18,24 @@ public class Control {
     private Long id;
 
     @Column(name = "scheduling")
-    private Boolean scheduling;
+    private String scheduling;
 
     @Column(name = "ir_rf_remote_control")
-    private Boolean  Ir_Rf_RemoteControl;
+    private String  Ir_Rf_RemoteControl;
 
     @Column(name = "wifi_smartphone_app")
-    private Boolean wifiSmartphoneApp;
+    private String wifiSmartphoneApp;
 
     @Column(name = "wifi_frequency_band")
     private String wifiFrequencyBand;
 
     @Column(name = "amazon_alexa_support")
-    private Boolean amazonAlexaSupport;
+    private String amazonAlexaSupport;
 
     @Column(name = "google_assistant_support")
-    private Boolean googleAssistantSupport;
+    private String googleAssistantSupport;
 
     @Column(name = "magnetic_virtual_walls")
-    private Boolean magneticVirtualWalls;
+    private String magneticVirtualWalls;
 
 }

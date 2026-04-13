@@ -86,7 +86,6 @@ public class QuestionServiceImpl implements QuestionService {
         RobotDTO robotDTO = robotService.getRobotById(questionCreateDTO.getRobotId())
                 .orElseThrow(() -> new IllegalArgumentException("Robot not found"));
 
-        robotService.incrementQnaCount(robotDTO);
         question.setAuthor(user);
         question.setRobot(modelMapper.map(robotDTO, Robot.class));
         questionRepository.save(question);

@@ -14,4 +14,6 @@ public interface QuestionRepository extends JpaRepository<Question,Long> {
 
     List<Question> findByCreateTimeAfter(LocalDateTime date);
 
+    long countByRobotId(Long robotId);
+
 }
