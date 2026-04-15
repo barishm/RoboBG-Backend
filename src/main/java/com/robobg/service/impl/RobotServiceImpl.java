@@ -158,9 +158,8 @@ public class RobotServiceImpl implements RobotService {
                     e.printStackTrace();
                 }
             }
-            availableBrandsService.decreaseCount(robot.getBrand());
             mostComparedService.deleteMostComparedEntityIfRobotWithIdExist(id);
-            robotRepository.deleteById(id);
+            robotRepository.delete(robot);
         } else {
             throw new NotFoundException();
         }

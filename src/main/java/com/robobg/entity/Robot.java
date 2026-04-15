@@ -66,38 +66,38 @@ public class Robot {
     @Column(name = "voice_prompts")
     private String voicePrompts;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cleaning_features_id",referencedColumnName = "id")
     private CleaningFeatures cleaningFeatures;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "mopping_features_id",referencedColumnName = "id")
     private MoppingFeatures moppingFeatures;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "batteries_id",referencedColumnName = "id")
     private Battery battery;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "controls_id",referencedColumnName = "id")
     private Control control;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "app_features_id",referencedColumnName = "id")
     private AppFeatures appFeatures;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "sensors_id",referencedColumnName = "id")
     private Sensor sensor;
 
-    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "other_specifications_id",referencedColumnName = "id")
     private OtherSpecifications otherSpecifications;
 
-    @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseLink> purchaseLinks;
 
-    @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     @ManyToMany(mappedBy = "compatibleRobots")

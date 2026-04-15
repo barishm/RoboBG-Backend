@@ -24,8 +24,8 @@ public class Question {
     @Column(name = "create_time")
     private LocalDateTime createTime;
 
-    @ManyToOne
-    @JoinColumn(name = "robot_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "robot_id", nullable = false)
     private Robot robot;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
