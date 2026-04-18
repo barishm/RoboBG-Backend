@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,11 +96,27 @@ public class Robot {
     private OtherSpecifications otherSpecifications;
 
     @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PurchaseLink> purchaseLinks;
+    private List<PurchaseLink> purchaseLinks = new ArrayList<>();
 
     @OneToMany(mappedBy = "robot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     @ManyToMany(mappedBy = "compatibleRobots")
     private Set<Consumable> consumables = new HashSet<>();
+
+
+    public void addPurchaseLink(PurchaseLink link) {
+        if (purchaseLinks == null) {
+            purchaseLinks = new ArrayList<>();
+        }
+        purchaseLinks.add(link);
+        link.setRobot(this);
+    }
+
+    public void clearPurchaseLinks() {
+        for (PurchaseLink link : purchaseLinks) {
+            link.setRobot(null);
+        }
+        purchaseLinks.clear();
+    }
 }

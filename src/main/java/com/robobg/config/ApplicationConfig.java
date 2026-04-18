@@ -1,5 +1,7 @@
 package com.robobg.config;
 
+import com.robobg.dtos.RobotDTO.CreateRobotDTO;
+import com.robobg.entity.Robot;
 import com.robobg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,7 +30,12 @@ public class ApplicationConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper.typeMap(CreateRobotDTO.class, Robot.class)
+                .addMappings(mapper -> mapper.skip(Robot::setPurchaseLinks));
+
+        return modelMapper;
     }
     @Bean
     public AuthenticationProvider authenticationProvider(){

@@ -7,9 +7,16 @@ import lombok.Data;
 
 @Data
 public class QuestionCreateDTO {
+
     private Long id;
+
+    @NotNull
     private Long robotId;
-    private String authorUsername;
+
+    private String anonymousName;
+
+    private String avatar;
+
     @NotBlank
     @NotNull
     @Size(min = 5,max = 300)

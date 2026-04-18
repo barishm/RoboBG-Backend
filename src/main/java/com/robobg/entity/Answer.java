@@ -30,4 +30,6 @@ public class Answer {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    private String avatar;
 }

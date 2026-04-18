@@ -2,17 +2,24 @@ package com.robobg.service.impl;
 
 import com.robobg.config.JwtService;
 import com.robobg.entity.Answer;
+import com.robobg.entity.Question;
 import com.robobg.entity.User;
 import com.robobg.dtos.QnaDTO.AnswerCreateDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.repository.AnswerRepository;
+import com.robobg.repository.QuestionRepository;
 import com.robobg.repository.UserRepository;
 import com.robobg.service.AnswerService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 @Service
@@ -20,13 +27,15 @@ public class AnswerServiceImpl implements AnswerService {
     private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final QuestionRepository questionRepository;
     @Autowired
     private ModelMapper modelMapper;
 
-    public AnswerServiceImpl(AnswerRepository answerRepository, UserRepository userRepository, JwtService jwtService) {
+    public AnswerServiceImpl(AnswerRepository answerRepository, UserRepository userRepository, JwtService jwtService,QuestionRepository questionRepository) {
         this.answerRepository = answerRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.questionRepository = questionRepository;
     }
 
 
@@ -34,47 +43,56 @@ public class AnswerServiceImpl implements AnswerService {
 
 
     @Override
-    public void createAnswer(AnswerCreateDTO answerCreateDTO, HttpServletRequest request) {
+    @Transactional
+    public void createAnswer(AnswerCreateDTO dto, HttpServletRequest request) {
+
+        // 🔐 MUST be authenticated
         String token = extractJwtFromRequest(request);
-        String tokenUsername = jwtService.extractUsername(token);
-        String requestUsername = answerCreateDTO.getAuthorUsername();
-        if (!tokenUsername.equals(requestUsername)) {
-            throw new IllegalArgumentException("Something went wrong!");
-        }
-        Answer answer = modelMapper.map(answerCreateDTO, Answer.class);
-        answer.setCreateTime(LocalDateTime.now());
-        Optional<User> userOptional = userRepository.findByUsername(answerCreateDTO.getAuthorUsername());
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            answer.setAuthor(user);
-            answerRepository.save(answer);
-        } else {
-            throw new IllegalArgumentException("Something went wrong!");
+        if (token == null || token.isBlank()) {
+            throw new IllegalArgumentException("Authentication required");
         }
 
+        String username = jwtService.extractUsername(token);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Question question = questionRepository.findById(dto.getQuestionId())
+                .orElseThrow(() -> new IllegalArgumentException("Question not found"));
+
+        Answer answer = new Answer();
+        answer.setText(dto.getText());
+        answer.setCreateTime(OffsetDateTime.now(ZoneOffset.UTC).toLocalDateTime());
+        answer.setAuthor(user);
+        answer.setQuestion(question);
+
+        answer.setAvatar(dto.getAvatar());
+
+        answerRepository.save(answer);
     }
 
     @Override
+    @Transactional
     public void deleteAnswer(Long answerId, HttpServletRequest request) {
+
         String token = extractJwtFromRequest(request);
         String tokenUsername = jwtService.extractUsername(token);
-        Optional<Answer> answer = answerRepository.findById(answerId);
-        String authorUsername = "";
-        if(answer.isPresent()){
-            authorUsername = answer.get().getAuthor().getUsername();
-        } else {
-            throw new IllegalArgumentException("Something went wrong!");
-        }
         String tokenRole = jwtService.extractRole(token);
-        if("ADMIN".equals(tokenRole)){
-            answerRepository.deleteById(answerId);
-        } else if (tokenUsername.equals(authorUsername)) {
-            answerRepository.deleteById(answerId);
+
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new IllegalArgumentException("Answer not found"));
+
+        String authorUsername = answer.getAuthor().getUsername();
+
+        boolean isAdmin = "ADMIN".equals(tokenRole);
+        boolean isOwner = tokenUsername.equals(authorUsername);
+
+        if (isAdmin || isOwner) {
+            answerRepository.delete(answer);
         } else {
-            throw new IllegalArgumentException("Something went wrong!");
+            throw new IllegalArgumentException("You are not allowed to delete this answer");
         }
-        answerRepository.deleteById(answerId);
     }
 
     @Override

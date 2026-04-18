@@ -1,26 +1,24 @@
 package com.robobg.service.impl;
 
 import com.robobg.config.JwtService;
+import com.robobg.dtos.QnaDTO.*;
 import com.robobg.entity.Answer;
 import com.robobg.entity.Question;
 import com.robobg.entity.Robot;
 import com.robobg.entity.User;
-import com.robobg.dtos.QnaDTO.AnswerDTO;
-import com.robobg.dtos.QnaDTO.LatestQuestionsDTO;
-import com.robobg.dtos.QnaDTO.QuestionCreateDTO;
-import com.robobg.dtos.QnaDTO.QuestionWithAnswersDTO;
-import com.robobg.dtos.RobotDTO.RobotDTO;
 import com.robobg.exceptions.EntityNotFoundException;
 import com.robobg.repository.QuestionRepository;
+import com.robobg.repository.RobotRepository;
 import com.robobg.repository.UserRepository;
 import com.robobg.service.QuestionService;
-import com.robobg.service.RobotService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,79 +30,138 @@ public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     private final JwtService jwtService;
-    private final RobotService robotService;
+    private final RobotRepository robotRepository;
     @Autowired
     private ModelMapper modelMapper;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository, UserRepository userRepository, JwtService jwtService, RobotService robotService) {
+    public QuestionServiceImpl(QuestionRepository questionRepository, UserRepository userRepository, JwtService jwtService, RobotRepository robotRepository) {
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.jwtService = jwtService;
-        this.robotService = robotService;
+        this.robotRepository = robotRepository;
     }
 
 
 
     @Override
     public List<QuestionWithAnswersDTO> findQuestionsByRobotId(Long robotId) {
+
         List<Question> questions = questionRepository.findByRobotId(robotId);
 
-        List<QuestionWithAnswersDTO> questionDTOs = new ArrayList<>();
+        return questions.stream().map(question -> {
 
-        for (Question question : questions) {
-            QuestionWithAnswersDTO questionDTO = modelMapper.map(question, QuestionWithAnswersDTO.class);
-            List<Answer> answers = question.getAnswers();
-            List<AnswerDTO> answerDTOs = answers.stream()
-                    .map(answer -> modelMapper.map(answer, AnswerDTO.class))
-                    .collect(Collectors.toList());
-            questionDTO.setAnswers(answerDTOs);
-            questionDTOs.add(questionDTO);
-        }
+            QuestionWithAnswersDTO dto = new QuestionWithAnswersDTO();
 
-        return questionDTOs;
+            dto.setId(question.getId());
+            dto.setText(question.getText());
+            dto.setCreateTime(question.getCreateTime());
+
+            AuthorDTO authorDTO = new AuthorDTO();
+
+            if (question.getAuthor() != null) {
+                authorDTO.setName(question.getAuthor().getUsername());
+                authorDTO.setAvatar(question.getAvatar());
+                authorDTO.setAnonymous(false);
+            } else {
+                authorDTO.setName(question.getAnonymousName());
+                authorDTO.setAvatar(question.getAvatar());
+                authorDTO.setAnonymous(true);
+            }
+
+            dto.setAuthor(authorDTO);
+
+            List<AnswerDTO> answerDTOs = question.getAnswers().stream()
+                    .map(answer -> {
+                        AnswerDTO a = new AnswerDTO();
+                        a.setId(answer.getId());
+                        a.setText(answer.getText());
+                        a.setCreateTime(answer.getCreateTime());
+
+                        AuthorDTO answerAuthor = new AuthorDTO();
+                        answerAuthor.setName(answer.getAuthor().getUsername());
+                        answerAuthor.setAvatar(answer.getAvatar());
+                        answerAuthor.setAnonymous(false);
+
+                        a.setAuthor(answerAuthor);
+
+                        return a;
+                    })
+                    .toList();
+
+            dto.setAnswers(answerDTOs);
+
+            return dto;
+
+        }).toList();
     }
 
 
 
     @Override
     @Transactional
-    public void createQuestion(QuestionCreateDTO questionCreateDTO, HttpServletRequest request) {
-        String token = extractJwtFromRequest(request);
-        String tokenUsername = jwtService.extractUsername(token);
-        String requestUsername = questionCreateDTO.getAuthorUsername();
+    public void createQuestion(QuestionCreateDTO dto, HttpServletRequest request) {
 
-        if (!tokenUsername.equals(requestUsername)) {
-            throw new IllegalArgumentException("Invalid token or username mismatch");
+        User user = null;
+
+        String token = extractJwtFromRequest(request);
+
+        if (token != null && !token.isBlank()) {
+            String username = jwtService.extractUsername(token);
+
+            user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
         }
 
-        Question question = modelMapper.map(questionCreateDTO, Question.class);
-        question.setCreateTime(LocalDateTime.now());
+        if (user == null) {
 
-        User user = userRepository.findByUsername(requestUsername)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            String name = dto.getAnonymousName();
 
-        RobotDTO robotDTO = robotService.getRobotById(questionCreateDTO.getRobotId())
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("Anonymous name is required for unauthenticated users");
+            }
+
+            if (name.length() < 3 || name.length() > 12) {
+                throw new IllegalArgumentException("Anonymous name must be between 3 and 12 characters");
+            }
+        }
+
+        Robot robot = robotRepository.findById(dto.getRobotId())
                 .orElseThrow(() -> new IllegalArgumentException("Robot not found"));
 
-        question.setAuthor(user);
-        question.setRobot(modelMapper.map(robotDTO, Robot.class));
+        Question question = new Question();
+        question.setText(dto.getText());
+        question.setAvatar(dto.getAvatar());
+        question.setCreateTime(OffsetDateTime.now(ZoneOffset.UTC).toLocalDateTime());
+        question.setRobot(robot);
+
+        if (user != null) {
+            question.setAuthor(user);
+        } else {
+            question.setAnonymousName(dto.getAnonymousName());
+        }
+
         questionRepository.save(question);
     }
 
-
     @Override
+    @Transactional
     public void deleteQuestion(Long questionId, HttpServletRequest request) throws EntityNotFoundException {
+
         String token = extractJwtFromRequest(request);
         String tokenUsername = jwtService.extractUsername(token);
         String tokenRole = jwtService.extractRole(token);
+
         Question question = findById(questionId);
-        String authorUsername = question.getAuthor().getUsername();
-        if("ADMIN".equals(tokenRole)){
-            questionRepository.deleteById(questionId);
-        } else if (tokenUsername.equals(authorUsername)) {
-            questionRepository.deleteById(questionId);
+
+        boolean isAdmin = "ADMIN".equals(tokenRole);
+
+        boolean isOwner = question.getAuthor() != null &&
+                tokenUsername.equals(question.getAuthor().getUsername());
+
+        if (isAdmin || isOwner) {
+            questionRepository.delete(question);
         } else {
-            throw new IllegalArgumentException("Something went wrong!");
+            throw new IllegalArgumentException("You are not allowed to delete this question");
         }
     }
 

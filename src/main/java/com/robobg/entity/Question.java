@@ -28,10 +28,14 @@ public class Question {
     @JoinColumn(name = "robot_id", nullable = false)
     private Robot robot;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    private String anonymousName;
+
+    private String avatar;
 }

@@ -2,6 +2,7 @@ package com.robobg.dtos.RobotDTO;
 
 
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class CreateRobotDTO {
@@ -26,4 +27,5 @@ public class CreateRobotDTO {
     private AppFeaturesDTO appFeatures;
     private SensorDTO sensor;
     private OtherSpecificationsDTO otherSpecifications;
+    private List<PurchaseLinkDTO> purchaseLinks;
 }

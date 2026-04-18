@@ -7,11 +7,13 @@ import lombok.Data;
 
 @Data
 public class AnswerCreateDTO {
-    private Long id;
-    private Long questionId;
-    private String authorUsername;
-    @NotBlank
+
     @NotNull
-    @Size(min = 5,max = 300)
+    private Long questionId;
+
+    @NotBlank
+    @Size(min = 5, max = 300)
     private String text;
+
+    private String avatar;
 }
