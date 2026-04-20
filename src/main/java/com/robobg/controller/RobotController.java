@@ -26,7 +26,7 @@ public class RobotController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping
     public List<RobotsListDTO> getAllRobots() {
         return robotService.getAllRobots();
     }
