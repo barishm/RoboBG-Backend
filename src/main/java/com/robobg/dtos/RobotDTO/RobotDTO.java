@@ -1,6 +1,6 @@
 package com.robobg.dtos.RobotDTO;
 
-import com.robobg.dtos.ConsumableDTO.ConsumableTitleDTO;
+import com.robobg.dtos.ConsumableDTO.ConsumableTitleImagesDTO;
 import lombok.Data;
 
 import java.util.List;
@@ -31,6 +31,6 @@ public class RobotDTO {
     private SensorDTO sensor;
     private OtherSpecificationsDTO otherSpecifications;
     private List<PurchaseLinkDTO> purchaseLinks;
-    private List<ConsumableTitleDTO> consumables;
+    private List<ConsumableTitleImagesDTO> consumables;
 
 }
