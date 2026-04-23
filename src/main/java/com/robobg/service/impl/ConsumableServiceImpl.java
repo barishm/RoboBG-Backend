@@ -1,5 +1,6 @@
 package com.robobg.service.impl;
 
+import com.robobg.dtos.ConsumableDTO.RobotModelImageDTO;
 import com.robobg.entity.Consumable;
 import com.robobg.entity.Robot;
 import com.robobg.dtos.ConsumableDTO.ConsumableDetailsDTO;
@@ -110,9 +111,15 @@ public class ConsumableServiceImpl implements ConsumableService {
             }
         }
 
-        if (updateConsumableDTO.getRobotIds() != null && !updateConsumableDTO.getRobotIds().isEmpty()) {
-            Set<Robot> updatedRobots = new HashSet<>(robotRepository.findAllById(updateConsumableDTO.getRobotIds()));
-            existingConsumable.setCompatibleRobots(updatedRobots);
+        if (updateConsumableDTO.getRobotIds() != null) {
+            if (updateConsumableDTO.getRobotIds().isEmpty()) {
+                // remove all relationships
+                existingConsumable.getCompatibleRobots().clear();
+            } else {
+                Set<Robot> updatedRobots =
+                        new HashSet<>(robotRepository.findAllById(updateConsumableDTO.getRobotIds()));
+                existingConsumable.setCompatibleRobots(updatedRobots);
+            }
         }
 
         consumableRepository.save(existingConsumable);
@@ -145,10 +152,26 @@ public class ConsumableServiceImpl implements ConsumableService {
                 .map(consumable -> {
                     ConsumableDetailsDTO dto = modelMapper.map(consumable, ConsumableDetailsDTO.class);
 
-                    List<String> updatedImages = dto.getImages().stream()
-                            .map(this::buildFullImageUrl)
-                            .toList();
-                    dto.setImages(updatedImages);
+                    if (dto.getImages() != null) {
+                        List<String> updatedImages = dto.getImages().stream()
+                                .map(this::buildFullImageUrl)
+                                .toList();
+                        dto.setImages(updatedImages);
+                    }
+
+                    if (dto.getRobots() != null) {
+                        dto.setRobots(
+                                dto.getRobots().stream()
+                                        .map(robot -> {
+                                            RobotModelImageDTO updatedRobot = new RobotModelImageDTO();
+                                            updatedRobot.setId(robot.getId());
+                                            updatedRobot.setModel(robot.getModel());
+                                            updatedRobot.setImage(buildFullImageUrl(robot.getImage()));
+                                            return updatedRobot;
+                                        })
+                                        .toList()
+                        );
+                    }
 
                     return dto;
                 });
