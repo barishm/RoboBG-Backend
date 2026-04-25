@@ -442,7 +442,23 @@ public class RobotServiceImpl implements RobotService {
         return robotRepository.findById(id)
                 .map(robot -> {
                     RobotDTO dto = modelMapper.map(robot, RobotDTO.class);
+
+                    // Fix main image
                     dto.setImage(buildFullImageUrl(dto.getImage()));
+
+                    // Fix consumable images
+                    if (dto.getConsumables() != null) {
+                        dto.getConsumables().forEach(consumable -> {
+                            if (consumable.getImages() != null) {
+                                consumable.setImages(
+                                        consumable.getImages().stream()
+                                                .map(this::buildFullImageUrl)
+                                                .toList()
+                                );
+                            }
+                        });
+                    }
+
                     return dto;
                 });
     }
