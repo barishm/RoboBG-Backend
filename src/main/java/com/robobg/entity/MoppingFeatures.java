@@ -18,25 +18,25 @@ public class MoppingFeatures {
     private Long id;
 
     @Column(name = "wet_mopping")
-    private Boolean wetMopping;
+    private String wetMopping;
 
     @Column(name = "electric_water_flow_control")
-    private Boolean electricWaterFlowControl;
+    private String electricWaterFlowControl;
 
     @Column(name = "water_tank_capacity")
     private Integer waterTankCapacity;
 
     @Column(name = "vibrating_mopping_pad")
-    private Boolean vibratingMoppingPad;
+    private String vibratingMoppingPad;
 
     @Column(name = "auto_mop_lifting")
-    private Boolean autoMopLifting;
+    private String autoMopLifting;
 
     @Column(name = "auto_water_tank_refilling")
-    private Boolean autoWaterTankRefilling;
+    private String autoWaterTankRefilling;
 
     @Column(name = "auto_mop_washing")
-    private Boolean autoMopWashing;
+    private String autoMopWashing;
 
     @Column(name = "spinning_mops")
     private String spinningMops;

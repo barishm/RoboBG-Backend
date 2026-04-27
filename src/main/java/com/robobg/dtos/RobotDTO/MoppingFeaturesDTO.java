@@ -5,13 +5,13 @@ import lombok.Data;
 @Data
 public class MoppingFeaturesDTO {
     private Long id;
-    private Boolean wetMopping;
-    private Boolean electricWaterFlowControl;
+    private String wetMopping;
+    private String electricWaterFlowControl;
     private Integer waterTankCapacity;
-    private Boolean vibratingMoppingPad;
-    private Boolean autoMopLifting;
-    private Boolean autoWaterTankRefilling;
-    private Boolean autoMopWashing;
+    private String vibratingMoppingPad;
+    private String autoMopLifting;
+    private String autoWaterTankRefilling;
+    private String autoMopWashing;
     private String spinningMops;
     private String washingMopsWithWarmWater;
     private String dryingTheMops;
