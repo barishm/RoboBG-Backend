@@ -7,7 +7,7 @@ public class MoppingFeaturesDTO {
     private Long id;
     private String wetMopping;
     private String electricWaterFlowControl;
-    private Integer waterTankCapacity;
+    private String waterTankCapacity;
     private String vibratingMoppingPad;
     private String autoMopLifting;
     private String autoWaterTankRefilling;

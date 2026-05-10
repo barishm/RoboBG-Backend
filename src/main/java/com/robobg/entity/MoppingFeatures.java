@@ -24,7 +24,7 @@ public class MoppingFeatures {
     private String electricWaterFlowControl;
 
     @Column(name = "water_tank_capacity")
-    private Integer waterTankCapacity;
+    private String waterTankCapacity;
 
     @Column(name = "vibrating_mopping_pad")
     private String vibratingMoppingPad;
